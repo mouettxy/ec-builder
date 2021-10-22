@@ -25,8 +25,9 @@ const emits = defineEmits(['update:node', 'delete:node'])
 const nodeModel = useVModel(props, 'node', emits)
 
 const nodeId = computed(() => {
-  if (nodeModel.value.creator)
+  if (nodeModel.value.creator) {
     return `${nodeModel.value.creator}.${nodeModel.value.id}`
+  }
 
   return nodeModel.value.id
 })
