@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/ec-builder/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/ec-builder/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/ec-builder/favicon-16x16.png">
+  <link rel="manifest" href="/ec-builder/site.webmanifest">
+  <link rel="mask-icon" href="/ec-builder/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>Загружаем страницу...</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.2/pdfmake.min.js" integrity="sha512-Yf733gmgLgGUo+VfWq4r5HAEaxftvuTes86bKvwTpqOY3oH0hHKtX/9FfKYUcpaxeBJxeXvcN4EY3J6fnmc9cA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.2/vfs_fonts.min.js" integrity="sha512-BDZ+kFMtxV2ljEa7OWUu0wuay/PAsJ2yeRsBegaSgdUhqIno33xmD9v3m+a2M3Bdn5xbtJtsJ9sSULmNBjCgYw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script type="module" crossorigin src="/ec-builder/assets/index.521760bc.js"></script>
+  <link rel="modulepreload" href="/ec-builder/assets/vendor.9cf30458.js">
+  <link rel="stylesheet" href="/ec-builder/assets/index.685a421c.css">
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    (function() {
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+      const setting = localStorage.getItem('color-schema') || 'auto'
+      if (setting === 'dark' || (prefersDark && setting !== 'light')) { document.documentElement.classList.toggle('dark', true) }
+    })()
+  </script>
+  
+</body>
+</html>
