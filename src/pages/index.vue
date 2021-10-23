@@ -232,3 +232,9 @@ const handleFileChange = async({ file }: { file: UploadFileInfo }): Promise<void
   @apply w-full;
 }
 </style>
+
+<route lang="yaml">
+name: index
+meta:
+  header: Создание документа
+</route>

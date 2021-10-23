@@ -78,3 +78,9 @@ const handleSaveSchema = () => {
     </div>
   </div>
 </template>
+
+<route lang="yaml">
+name: create
+meta:
+  header: Создание схемы
+</route>

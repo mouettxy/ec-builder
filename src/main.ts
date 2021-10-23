@@ -15,5 +15,10 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 })
+
+router.beforeEach((to) => {
+  document.title = to.meta.header as string
+})
+
 app.use(router)
 app.mount('#app')
