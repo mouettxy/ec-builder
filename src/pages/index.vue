@@ -95,6 +95,7 @@ const handleFinish = () => {
   }
 
   schema.nodes.forEach(node => parseNodeAnswers(node, 0))
+  current.value = 1
 
   message.success('Файл успешно сформирован, начинаем скачивание')
 

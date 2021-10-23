@@ -1,6 +1,6 @@
 // register vue composition api globally
 import { createApp } from 'vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import routes from 'virtual:generated-pages'
 import App from './App.vue'
 
@@ -12,7 +12,7 @@ import 'virtual:windi-utilities.css'
 
 const app = createApp(App)
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(import.meta.env.PROD ? '/ec-builder/' : '/'),
   routes,
 })
 

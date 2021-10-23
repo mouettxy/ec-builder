@@ -18,7 +18,7 @@ export type ECNode = {
 export type ECNodeOption = ECNode & { when: boolean }
 
 export const schema = reactive({
-  name: 'Заявка на закупку',
+  name: '',
   nodes: [] as ECNode[],
 })
 
