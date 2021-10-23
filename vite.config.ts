@@ -14,7 +14,6 @@ export default defineConfig({
       '~/': `${path.resolve(__dirname, 'src')}/`,
     },
   },
-  base: process.env.NODE_ENV === 'production' ? '/ec-builder/' : '/',
   plugins: [
     Vue(),
 

@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "vite --port 3333 --open",
-    "build:app": "cross-env NODE_ENV=production vite build",
+    "build:app": "cross-env NODE_ENV=production vite build --base=/ec-builder/",
     "build": "bash.exe ./build.sh",
     "preview": "vite preview"
   },
