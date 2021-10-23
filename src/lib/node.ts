@@ -19,7 +19,7 @@ export type ECNodeOption = ECNode & { when: boolean }
 
 export const schema = reactive({
   name: 'Заявка на закупку',
-  nodes: [{ _id: 'IQQznVZ6JWMyD-DuzxODW', id: 1, type: 'node', title: 'У заявки фиксированная сумма?', options: [{ _id: 'o4inO5-KwlYbpX40MMsfk', title: 'Фиксированная сумма для группы заявок', type: 'option', when: true }, { _id: '2g3S8hNClao-NwSmyJzqW', title: 'Фиксированная сумма для одной заявки', type: 'option', when: true }, { _id: 'ZOmEQsXUwFBwP1RY8yQBE', title: 'Сумма будет определяться по доп. соглашениям', type: 'option', when: false }] }, { _id: 'jBigyw7804yePTjKMGjg1', id: 2, type: 'node', title: 'Есть номер лота?', options: [{ _id: 'C9lS5xCVp-GcleF6RwHDP', creator: 'jBigyw7804yePTjKMGjg1', type: 'node', title: 'Закупка в ГКПЗ утверждена?', options: [{ _id: 'ee62lmDPO40sYeBs4ybNx', title: 'В закупке один лот', type: 'option', when: true }, { _id: 'fmGMyR-t1KKFxdZhucSzO', title: 'В закупке несколько лотов', type: 'option', when: true }, { _id: 'jXi9Rb85QjRHVg0JGgmaR', type: 'option', title: 'Во внеплановой закупке один лот', when: false }], when: true }, { _id: 'd0V_jW019gTkrwp1iIA7q', creator: 'jBigyw7804yePTjKMGjg1', type: 'node', title: 'Способ закупки упрощённый?', options: [{ _id: 'Kh3zOR2JYWC9TcL_R-Obp', title: 'УЗ или ЕИ или РЗП', type: 'option', when: true }, { _id: '03DhyN64UoZ16bXVZ13qK', title: 'Другой способ', type: 'option', when: false }], when: true }, { _id: 'toSKufj2qw4s9fq7MEzY1', type: 'option', title: 'Входит в список не включаемых ГКПЗ', when: false }, { _id: '2GRqbMc634l-_p8b0kkFT', type: 'option', title: 'Биржевая закупка', when: false }] }, { _id: 'klGVfQ0KbCmE8KGEe25iy', id: 3, type: 'node', title: 'Договор с НДС', options: [{ _id: 'tIfDo-2g1oBn0bCaCtQ5Z', creator: 'klGVfQ0KbCmE8KGEe25iy', type: 'node', title: 'Ставка НДС будет одна?', options: [{ _id: 'KfnZT2mRoR-GNbxm-Ibxz', title: 'Ставка НДС одна', type: 'option', when: true }, { _id: 'viE0csX3vQaDPor00MuQ6', title: 'Несколько ставок НДС', type: 'option', when: false }], when: true }, { _id: '6BOc_MCR_DmqtAOmr8OT6', type: 'option', title: 'Сумма договора без НДС', when: false }] }] as ECNode[],
+  nodes: [] as ECNode[],
 })
 
 export const deleteNodeOption = (node: ECNode, option: ECNodeOption) => {
@@ -52,7 +52,7 @@ export const addNodeChild = (node: ECNode, when: boolean) => {
 }
 
 export const addNode = (nodes: ECNode[]) => {
-  const lastId = nodes[nodes.length - 1].id || 0
+  const lastId = nodes[nodes.length - 1]?.id || 0
   nodes.push(
     {
       _id: nanoid(),
@@ -97,4 +97,18 @@ export const enrichWithFillData = (schema: {name: string; nodes: ECNode[]}) => {
   schema.nodes.forEach((node) => {
     addComputedId(node)
   })
+}
+
+export const setSchema = (schemaToSet: {name: string; nodes: ECNode[]}, enrich: boolean) => {
+  schema.name = schemaToSet.name
+  schema.nodes = schemaToSet.nodes
+
+  if (enrich) {
+    enrichWithFillData(schema)
+  }
+}
+
+export const resetSchema = () => {
+  schema.name = ''
+  schema.nodes = []
 }

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import FileSaver from 'file-saver'
-import { addNode, ECNode, schema } from '~/lib/node'
+import { addNode, ECNode, resetSchema, schema } from '~/lib/node'
 
-watch(schema, value => console.log(value), { deep: true })
+// watch(schema, value => console.log(value), { deep: true })
 
 const handleNodeDelete = (node: ECNode, parent: ECNode | null) => {
   if (!parent) {
@@ -22,6 +22,10 @@ const handleAddTopLevelNode = () => {
   addNode(schema.nodes)
 }
 
+const handleReset = () => {
+  resetSchema()
+}
+
 const handleSaveSchema = () => {
   const file = new Blob([JSON.stringify(schema)], {
     type: 'application/json',
@@ -34,12 +38,18 @@ const handleSaveSchema = () => {
 
 <template>
   <div class="w-[980px] px-6 py-8">
-    <n-h2 prefix="bar">
-      <n-text type="primary">
-        Создание схемы
-      </n-text>
-    </n-h2>
-    <div>
+    <div class="flex justify-between items-center">
+      <n-h2 prefix="bar" class="mb-0">
+        <n-text type="primary">
+          Создание схемы
+        </n-text>
+      </n-h2>
+      <n-button dashed @click="handleReset">
+        Сбросить
+        <bx-bx-refresh class="ml-2" />
+      </n-button>
+    </div>
+    <div class="mt-6">
       <n-input v-model:value="schema.name" type="text" placeholder="Название" size="large" />
       <div class="mt-4">
         <ec-node

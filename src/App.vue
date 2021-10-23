@@ -3,7 +3,9 @@
 <template>
   <main class="w-full h-full">
     <section class="flex justify-center">
-      <router-view />
+      <n-message-provider>
+        <router-view />
+      </n-message-provider>
     </section>
   </main>
 </template>

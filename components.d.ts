@@ -4,11 +4,13 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
+    BxBxArchive: typeof import('~icons/bx/bx-archive')['default']
     BxBxCheck: typeof import('~icons/bx/bx-check')['default']
     BxBxChevronLeft: typeof import('~icons/bx/bx-chevron-left')['default']
     BxBxChevronRight: typeof import('~icons/bx/bx-chevron-right')['default']
     BxBxDotsHorizontal: typeof import('~icons/bx/bx-dots-horizontal')['default']
     BxBxPlus: typeof import('~icons/bx/bx-plus')['default']
+    BxBxRefresh: typeof import('~icons/bx/bx-refresh')['default']
     BxBxSave: typeof import('~icons/bx/bx-save')['default']
     BxBxsTrash: typeof import('~icons/bx/bxs-trash')['default']
     BxBxTrash: typeof import('~icons/bx/bx-trash')['default']
@@ -41,7 +43,9 @@ declare module 'vue' {
     NIcon: typeof import('naive-ui')['NIcon']
     NInput: typeof import('naive-ui')['NInput']
     NInputGroup: typeof import('naive-ui')['NInputGroup']
+    NMessageProvider: typeof import('naive-ui')['NMessageProvider']
     NModal: typeof import('naive-ui')['NModal']
+    NP: typeof import('naive-ui')['NP']
     NPageHeader: typeof import('naive-ui')['NPageHeader']
     NRadio: typeof import('naive-ui')['NRadio']
     NRadioButton: typeof import('naive-ui')['NRadioButton']
@@ -51,6 +55,8 @@ declare module 'vue' {
     NStep: typeof import('naive-ui')['NStep']
     NSteps: typeof import('naive-ui')['NSteps']
     NText: typeof import('naive-ui')['NText']
+    NUpload: typeof import('naive-ui')['NUpload']
+    NUploadDragger: typeof import('naive-ui')['NUploadDragger']
   }
 }
 
