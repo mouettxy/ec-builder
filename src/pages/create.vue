@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import FileSaver from 'file-saver'
 import { addNode, ECNode, schema } from '~/lib/node'
 
 watch(schema, value => console.log(value), { deep: true })
@@ -21,17 +22,23 @@ const handleAddTopLevelNode = () => {
   addNode(schema.nodes)
 }
 
+const handleSaveSchema = () => {
+  const file = new Blob([JSON.stringify(schema)], {
+    type: 'application/json',
+  })
+
+  FileSaver.saveAs(file, `${schema.name}.json`)
+}
+
 </script>
 
 <template>
   <div class="w-[980px] px-6 py-8">
-    <n-page-header class="py-4">
-      <template #title>
-        <h1 class="text-2xl">
-          Создание схемы
-        </h1>
-      </template>
-    </n-page-header>
+    <n-h2 prefix="bar">
+      <n-text type="primary">
+        Создание схемы
+      </n-text>
+    </n-h2>
     <div>
       <n-input v-model:value="schema.name" type="text" placeholder="Название" size="large" />
       <div class="mt-4">
@@ -46,6 +53,17 @@ const handleAddTopLevelNode = () => {
       </div>
       <n-button dashed type="info" @click="handleAddTopLevelNode">
         Добавить вопрос
+      </n-button>
+      <n-button
+        v-if="schema.nodes.length"
+        class="mt-4"
+        block
+        dashed
+        type="success"
+        @click="handleSaveSchema"
+      >
+        <bx-bx-save />
+        Скачать схему
       </n-button>
     </div>
   </div>

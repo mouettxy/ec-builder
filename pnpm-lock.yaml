@@ -5,11 +5,13 @@ specifiers:
   '@iconify-json/bx': ^1.0.1
   '@iconify-json/carbon': ^1.0.3
   '@ivanv/vue-collapse-transition': ^1.0.2
+  '@types/file-saver': ^2.0.3
   '@types/node': ^16.10.2
   '@vitejs/plugin-vue': ^1.9.2
   '@vueuse/core': ^6.5.3
   cross-env: ^7.0.3
   eslint: ^7.32.0
+  file-saver: ^2.0.5
   jspdf: ^2.4.0
   naive-ui: ^2.19.11
   nanoid: ^3.1.30
@@ -29,6 +31,7 @@ specifiers:
 dependencies:
   '@ivanv/vue-collapse-transition': 1.0.2
   '@vueuse/core': 6.5.3_vue@3.2.19
+  file-saver: 2.0.5
   jspdf: 2.4.0
   nanoid: 3.1.30
   pdfmake: 0.2.2
@@ -40,6 +43,7 @@ devDependencies:
   '@antfu/eslint-config': 0.9.0_eslint@7.32.0+typescript@4.4.3
   '@iconify-json/bx': 1.0.1
   '@iconify-json/carbon': 1.0.3
+  '@types/file-saver': 2.0.3
   '@types/node': 16.10.2
   '@vitejs/plugin-vue': 1.9.2_vite@2.6.2
   cross-env: 7.0.3
@@ -551,6 +555,10 @@ packages:
     dependencies:
       estree-walker: 2.0.2
       picomatch: 2.3.0
+    dev: true
+
+  /@types/file-saver/2.0.3:
+    resolution: {integrity: sha512-MBIou8pd/41jkff7s97B47bc9+p0BszqqDJsO51yDm49uUxeKzrfuNl5fSLC6BpLEWKA8zlwyqALVmXrFwoBHQ==}
     dev: true
 
   /@types/istanbul-lib-coverage/2.0.3:
@@ -2290,6 +2298,10 @@ packages:
     dependencies:
       flat-cache: 3.0.4
     dev: true
+
+  /file-saver/2.0.5:
+    resolution: {integrity: sha512-P9bmyZ3h/PRG+Nzga+rbdI4OEpNDzAVyy74uVO9ATgzLK6VtAsYybF/+TOCvrc0MO793d6+42lLyZTw7/ArVzA==}
+    dev: false
 
   /fill-range/7.0.1:
     resolution: {integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==}

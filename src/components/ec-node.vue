@@ -56,7 +56,7 @@ const handleNodeDelete = (node: ECNode, parent: ECNode | null) => {
             Нет
           </n-button>
         </template>
-        <n-input v-model:value="nodeModel.title" type="text" :placeholder="node._id" />
+        <n-input v-model:value="nodeModel.title" type="text" placeholder="Введите вопрос" />
         <n-button ghost @click="handleNodeDelete(nodeModel, parent)">
           <template #icon>
             <n-icon><bx-bx-trash /></n-icon>

@@ -30,7 +30,7 @@ const optionModel = useVModel(props, 'option', emits)
           <n-button dashed :type="!optionModel.when ? 'info' : 'default'" @click="optionModel.when = false">
             Нет
           </n-button>
-          <n-input v-model:value="optionModel.title" type="text" :placeholder="option._id" />
+          <n-input v-model:value="optionModel.title" type="text" placeholder="Введите опцию" />
           <n-button ghost @click="emits('delete:option', option)">
             <template #icon>
               <n-icon><bx-bx-trash /></n-icon>

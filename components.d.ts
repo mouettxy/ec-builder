@@ -9,6 +9,7 @@ declare module 'vue' {
     BxBxChevronRight: typeof import('~icons/bx/bx-chevron-right')['default']
     BxBxDotsHorizontal: typeof import('~icons/bx/bx-dots-horizontal')['default']
     BxBxPlus: typeof import('~icons/bx/bx-plus')['default']
+    BxBxSave: typeof import('~icons/bx/bx-save')['default']
     BxBxsTrash: typeof import('~icons/bx/bxs-trash')['default']
     BxBxTrash: typeof import('~icons/bx/bx-trash')['default']
     CarbonCampsite: typeof import('~icons/carbon/campsite')['default']
