@@ -14,6 +14,7 @@ export default defineConfig({
       '~/': `${path.resolve(__dirname, 'src')}/`,
     },
   },
+  base: process.env.NODE_ENV === 'production' ? '/ec-builder/' : '/',
   plugins: [
     Vue(),
 
@@ -39,8 +40,7 @@ export default defineConfig({
           componentPrefix: '',
         }),
         (name: string) => {
-          if (name.match(/^N[A-Z]/))
-            return { importName: name, path: 'naive-ui' }
+          if (name.match(/^N[A-Z]/)) { return { importName: name, path: 'naive-ui' } }
         },
       ],
       dts: true,
@@ -69,6 +69,7 @@ export default defineConfig({
     ],
     exclude: [
       'vue-demi',
+      'pdfmake',
     ],
   },
 })

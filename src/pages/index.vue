@@ -2,13 +2,7 @@
 import CollapseTransition from '@ivanv/vue-collapse-transition/src/CollapseTransition.vue'
 import { Ref } from '@vue/reactivity'
 import { UploadFileInfo, useMessage } from 'naive-ui'
-// @ts-ignore
-import pdfMake from 'pdfmake'
-// @ts-ignore
-import pdfFonts from 'pdfmake/build/vfs_fonts'
 import { schema, enrichWithFillData, ECNode, setSchema, resetSchema } from '~/lib/node'
-
-pdfMake.vfs = pdfFonts.pdfMake.vfs
 
 enrichWithFillData(schema)
 
@@ -70,7 +64,7 @@ const downloadPdf = (name: string, answers: {
     })
   })
 
-  pdfMake.createPdf({ content: ctx }).download(name)
+  window.pdfMake.createPdf({ content: ctx }).download(name)
 }
 
 const handleFinish = () => {
