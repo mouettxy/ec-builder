@@ -1,38 +1,12 @@
 <script setup lang="ts">
-import FileSaver from 'file-saver'
-import { addNode, ECNode, resetSchema, schema } from '~/lib/node'
+import { addNode, deleteNode, ECNode, resetSchema, schemaToFile, useSchema } from '~/lib/schema'
 
-// watch(schema, value => console.log(value), { deep: true })
+const { schema } = useSchema()
 
-const handleNodeDelete = (node: ECNode, parent: ECNode | null) => {
-  if (!parent) {
-    schema.nodes = schema.nodes.filter(e => e._id !== node._id).map((e, i) => {
-      return {
-        ...e,
-        id: i + 1,
-      }
-    })
-    return
-  }
-
-  if (parent.options) { parent.options = parent.options.filter(e => e._id !== node._id) }
-}
-
-const handleAddTopLevelNode = () => {
-  addNode(schema.nodes)
-}
-
-const handleReset = () => {
-  resetSchema()
-}
-
-const handleSaveSchema = () => {
-  const file = new Blob([JSON.stringify(schema)], {
-    type: 'application/json',
-  })
-
-  FileSaver.saveAs(file, `${schema.name}.json`)
-}
+const handleNodeDelete = (node: ECNode, parent: ECNode | null) => deleteNode(node, parent)
+const handleAddTopLevelNode = () => addNode(schema.nodes)
+const handleReset = () => resetSchema()
+const handleSaveSchema = () => schemaToFile()
 
 </script>
 

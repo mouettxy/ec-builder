@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { PropType } from '@vue/runtime-core'
-import { ECNode } from '~/lib/node'
+import { ECNode } from '~/lib/schema'
 
 const props = defineProps({
   node: {
