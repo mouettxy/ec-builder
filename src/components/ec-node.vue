@@ -43,20 +43,45 @@ const handleNodeDelete = (node: ECNode, parent: ECNode | null) => {
 
 <template>
   <div class="ec-node rounded-lg">
-    <div v-if="isFirst" class="bg-gray-100 text-gray-700 font-bold px-4 py-1 select-none rounded-md grid place-items-center">
+    <div
+      v-if="isFirst"
+      class="
+        bg-gray-100
+        text-gray-700
+        font-bold
+        px-4
+        py-1
+        select-none
+        rounded-md
+        grid
+        place-items-center
+      "
+    >
       {{ nodeId }}
     </div>
-    <div class="w-full" :class="{'col-span-2': !isFirst}">
+    <div class="w-full" :class="{ 'col-span-2': !isFirst }">
       <n-input-group>
         <template v-if="!isFirst">
-          <n-button dashed :type="nodeModel.when ? 'info' : 'default'" @click="nodeModel.when = true">
+          <n-button
+            dashed
+            :type="nodeModel.when ? 'info' : 'default'"
+            @click="nodeModel.when = true"
+          >
             Да
           </n-button>
-          <n-button dashed :type="!nodeModel.when ? 'info' : 'default'" @click="nodeModel.when = false">
+          <n-button
+            dashed
+            :type="!nodeModel.when ? 'info' : 'default'"
+            @click="nodeModel.when = false"
+          >
             Нет
           </n-button>
         </template>
-        <n-input v-model:value="nodeModel.title" type="text" placeholder="Введите вопрос" />
+        <n-input
+          v-model:value="nodeModel.title"
+          type="text"
+          placeholder="Введите вопрос"
+        />
         <n-button ghost @click="handleNodeDelete(nodeModel, parent)">
           <template #icon>
             <n-icon><bx-bx-trash /></n-icon>

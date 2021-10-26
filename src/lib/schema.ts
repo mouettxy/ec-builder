@@ -16,7 +16,6 @@ export type ECNode = {
   when?: boolean
   value?: boolean | null
   answer?: string
-
 }
 
 export type ECNodeOption = ECNode & { when: boolean }
@@ -31,7 +30,9 @@ export function useSchema() {
 }
 
 export function deleteNodeOption(node: ECNode, option: ECNodeOption) {
-  if (node.options) { return node.options.filter(nodeOption => nodeOption._id !== option._id) }
+  if (node.options) {
+    return node.options.filter((nodeOption) => nodeOption._id !== option._id)
+  }
 }
 
 export function addNodeOption(node: ECNode, when: boolean) {
@@ -44,35 +45,31 @@ export function addNodeOption(node: ECNode, when: boolean) {
 }
 
 export function addNodeChild(node: ECNode, when: boolean) {
-  node.options?.push(
-    {
-      _id: nanoid(),
-      creator: node._id,
-      type: 'node',
-      title: '',
-      options: [
-        { _id: nanoid(), title: '', type: 'option', when: true },
-        { _id: nanoid(), title: '', type: 'option', when: false },
-      ],
-      when,
-    },
-  )
+  node.options?.push({
+    _id: nanoid(),
+    creator: node._id,
+    type: 'node',
+    title: '',
+    options: [
+      { _id: nanoid(), title: '', type: 'option', when: true },
+      { _id: nanoid(), title: '', type: 'option', when: false },
+    ],
+    when,
+  })
 }
 
 export function addNode(nodes: ECNode[]) {
   const lastId = nodes[nodes.length - 1]?.id || 0
-  nodes.push(
-    {
-      _id: nanoid(),
-      id: lastId + 1,
-      type: 'node',
-      title: '',
-      options: [
-        { _id: nanoid(), title: '', type: 'option', when: true },
-        { _id: nanoid(), title: '', type: 'option', when: false },
-      ],
-    },
-  )
+  nodes.push({
+    _id: nanoid(),
+    id: lastId + 1,
+    type: 'node',
+    title: '',
+    options: [
+      { _id: nanoid(), title: '', type: 'option', when: true },
+      { _id: nanoid(), title: '', type: 'option', when: false },
+    ],
+  })
 }
 
 export function useEnrichedSchema() {
@@ -117,21 +114,23 @@ export function useEnrichedSchema() {
 
 export function deleteNode(node: ECNode, parent: ECNode | null) {
   if (!parent) {
-    schema.nodes = schema.nodes.filter(e => e._id !== node._id).map((e, i) => {
-      return {
-        ...e,
-        id: i + 1,
-      }
-    })
+    schema.nodes = schema.nodes
+      .filter((e) => e._id !== node._id)
+      .map((e, i) => {
+        return {
+          ...e,
+          id: i + 1,
+        }
+      })
     return
   }
 
   if (parent.options) {
-    parent.options = parent.options.filter(e => e._id !== node._id)
+    parent.options = parent.options.filter((e) => e._id !== node._id)
   }
 }
 
-export function setSchema(schemaToSet: {name: string; nodes: ECNode[]}) {
+export function setSchema(schemaToSet: { name: string; nodes: ECNode[] }) {
   schema.name = schemaToSet.name
   schema.nodes = schemaToSet.nodes
 }
@@ -150,7 +149,7 @@ export function schemaToFile() {
 }
 
 export function isNodeCompleted(node: ECNode) {
-  const hasSubnodes = node.options?.some(nodeEl => nodeEl.type === 'node')
+  const hasSubnodes = node.options?.some((nodeEl) => nodeEl.type === 'node')
 
   if (hasSubnodes) {
     const relevantNodes = node.options?.filter((nodeEl) => {
@@ -169,7 +168,7 @@ export function isNodeCompleted(node: ECNode) {
       return !!node.answer
     }
 
-    return relevantNodes?.every(nodeEl => nodeEl.answer)
+    return relevantNodes?.every((nodeEl) => nodeEl.answer)
   }
 
   return !!node.answer
@@ -182,7 +181,7 @@ export function useSchemaAnswers() {
     const question = `${node.computedId || `${node.id}.`} ${node.title}`
     const questionAnswer = node.value ? 'Да' : 'Нет'
     const selectedOption = node.answer || ''
-    const hasSubnodes = node.options?.some(nodeEl => nodeEl.type === 'node')
+    const hasSubnodes = node.options?.some((nodeEl) => nodeEl.type === 'node')
 
     answers.value.push({
       question,
@@ -200,7 +199,7 @@ export function useSchemaAnswers() {
     }
   }
 
-  schema.nodes.forEach(node => getNodeAnswers(node, 0))
+  schema.nodes.forEach((node) => getNodeAnswers(node, 0))
 
   return { answers }
 }

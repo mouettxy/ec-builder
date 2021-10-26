@@ -4,7 +4,8 @@
     "dev": "vite --port 3333 --open",
     "build:app": "cross-env NODE_ENV=production vite build --base=/ec-builder/",
     "build": "bash.exe ./build.sh",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint --fix src/**/*"
   },
   "dependencies": {
     "@ivanv/vue-collapse-transition": "^1.0.2",

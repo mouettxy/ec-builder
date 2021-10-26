@@ -14,7 +14,12 @@ const props = defineProps({
   },
 })
 
-const emits = defineEmits(['update:current', 'click:prev', 'click:next', 'click:finish'])
+const emits = defineEmits([
+  'update:current',
+  'click:prev',
+  'click:next',
+  'click:finish',
+])
 const currentStep = useVModel(props, 'current', emits)
 
 const hasNextStep = computed(() => {
@@ -36,11 +41,9 @@ const finish = () => {
 const next = () => {
   if (!currentStep.value) {
     currentStep.value = 1
-  }
-  else if (currentStep.value >= props.total) {
+  } else if (currentStep.value >= props.total) {
     currentStep.value = props.total
-  }
-  else {
+  } else {
     currentStep.value++
   }
 
@@ -50,11 +53,9 @@ const next = () => {
 const prev = () => {
   if (!currentStep.value) {
     currentStep.value = 1
-  }
-  else if (currentStep.value <= 1) {
+  } else if (currentStep.value <= 1) {
     currentStep.value = 1
-  }
-  else {
+  } else {
     currentStep.value--
   }
 
@@ -68,11 +69,21 @@ const prev = () => {
       <bx-bx-chevron-left class="mr-2" />
       Назад
     </n-button>
-    <n-button v-if="hasNextStep" :disabled="disabledNext" type="primary" @click="next">
+    <n-button
+      v-if="hasNextStep"
+      :disabled="disabledNext"
+      type="primary"
+      @click="next"
+    >
       Дальше
       <bx-bx-chevron-right class="ml-2" />
     </n-button>
-    <n-button v-if="isFinish" :disabled="disabledNext" type="primary" @click="finish">
+    <n-button
+      v-if="isFinish"
+      :disabled="disabledNext"
+      type="primary"
+      @click="finish"
+    >
       Завершить
       <bx-bx-chevron-right class="ml-2" />
     </n-button>

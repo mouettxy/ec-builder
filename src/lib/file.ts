@@ -12,16 +12,14 @@ export async function fileToJson(file: File) {
         try {
           const json = JSON.parse(event.target.result)
           resolve(json)
-        }
-        catch (error) {
+        } catch (error) {
           reject(error)
         }
-      }
-      else {
+      } else {
         reject(new Error('Не удалось прочитать файл'))
       }
     }
-    fileReader.onerror = error => reject(error)
+    fileReader.onerror = (error) => reject(error)
     fileReader.readAsText(file)
   })
 }
@@ -32,23 +30,23 @@ export async function uploadSchema(file: UploadFileInfo) {
 
   if (file.file) {
     try {
-      const parsedFile = await fileToJson(file.file) as {name: string; nodes: ECNode[]}
+      const parsedFile = (await fileToJson(file.file)) as {
+        name: string
+        nodes: ECNode[]
+      }
       if (!parsedFile.name || !parsedFile.nodes) {
         fileState.value = 'nofile'
         message.value = 'Не удалось загрузить файл'
-      }
-      else {
+      } else {
         fileState.value = 'uploaded'
         setSchema(parsedFile)
         message.value = 'Файл успешно загружен'
       }
-    }
-    catch (error) {
+    } catch (error) {
       fileState.value = 'nofile'
       message.value = 'Не удалось загрузить файл'
     }
-  }
-  else {
+  } else {
     fileState.value = 'nofile'
     message.value = 'Не удалось загрузить файл'
   }

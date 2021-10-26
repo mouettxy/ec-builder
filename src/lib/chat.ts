@@ -16,12 +16,21 @@ export type Message = {
 
 export type Messages = Message[]
 
-const messages: Ref<Messages> = ref(
-  [
-    { id: nanoid(), avatar: true, from: true, type: 'hello' as MessageType, text: '' },
-    { id: nanoid(), from: true, type: 'file' as MessageType, text: 'Загрузите схему инструкции что-бы продолжить' },
-  ],
-)
+const messages: Ref<Messages> = ref([
+  {
+    id: nanoid(),
+    avatar: true,
+    from: true,
+    type: 'hello' as MessageType,
+    text: '',
+  },
+  {
+    id: nanoid(),
+    from: true,
+    type: 'file' as MessageType,
+    text: 'Загрузите схему инструкции что-бы продолжить',
+  },
+])
 
 export function useMessages() {
   const lastMessage = computed(() => {
@@ -45,14 +54,27 @@ export function useMessagesControls() {
     })
   }
 
-  const addMessagePair = ({ toText, fromText, options }: {toText: string; fromText: string; options?: any[]}) => {
+  const addMessagePair = ({
+    toText,
+    fromText,
+    options,
+  }: {
+    toText: string
+    fromText: string
+    options?: any[]
+  }) => {
     if (options) {
       addMessages([
         { to: true, type: 'text', text: toText },
-        { from: true, type: 'text', text: fromText, avatar: true, chips: options },
+        {
+          from: true,
+          type: 'text',
+          text: fromText,
+          avatar: true,
+          chips: options,
+        },
       ])
-    }
-    else {
+    } else {
       addMessages([
         { to: true, type: 'text', text: toText },
         { from: true, type: 'text', text: fromText, avatar: true },
@@ -71,14 +93,11 @@ export function useChatHello() {
   const timeAwareHello = computed(() => {
     if (hours > 6 && hours < 12) {
       return 'Доброе утро!'
-    }
-    else if (hours >= 12 && hours < 18) {
+    } else if (hours >= 12 && hours < 18) {
       return 'Добрый день!'
-    }
-    else if (hours >= 18 && hours < 23) {
+    } else if (hours >= 18 && hours < 23) {
       return 'Добрый вечер!'
-    }
-    else {
+    } else {
       return 'Доброй ночи!'
     }
   })

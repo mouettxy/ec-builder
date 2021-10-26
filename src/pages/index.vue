@@ -4,13 +4,20 @@ import { Ref } from '@vue/reactivity'
 import { UploadFileInfo, useMessage } from 'naive-ui'
 import { FileState, uploadSchema } from '~/lib/file'
 import { createPdf } from '~/lib/pdf'
-import { resetSchema, isNodeCompleted, useSchemaAnswers, useEnrichedSchema } from '~/lib/schema'
+import {
+  resetSchema,
+  isNodeCompleted,
+  useSchemaAnswers,
+  useEnrichedSchema,
+} from '~/lib/schema'
 
 const { enrichedSchema } = useEnrichedSchema()
 
 const current = ref(1)
 const fileState = ref('nofile') as Ref<FileState>
-const currentStatus = ref('process') as Ref<'process' | 'error' | 'wait' | 'finish'>
+const currentStatus = ref('process') as Ref<
+  'process' | 'error' | 'wait' | 'finish'
+>
 const notification = useMessage()
 
 const totalQuestions = computed(() => {
@@ -26,13 +33,16 @@ const handleFinish = () => {
   resetSchema()
 }
 
-const handleFileChange = async({ file }: { file: UploadFileInfo }): Promise<void> => {
+const handleFileChange = async ({
+  file,
+}: {
+  file: UploadFileInfo
+}): Promise<void> => {
   const uploadedFile = await uploadSchema(file)
 
   notification.success(uploadedFile.message.value)
   fileState.value = uploadedFile.fileState.value
 }
-
 </script>
 
 <template>
@@ -43,12 +53,15 @@ const handleFileChange = async({ file }: { file: UploadFileInfo }): Promise<void
       </n-text>
     </n-h2>
     <n-h2 v-else prefix="bar">
-      <n-text type="primary">
-        Загрузите схему
-      </n-text>
+      <n-text type="primary"> Загрузите схему </n-text>
     </n-h2>
     <div v-if="!enrichedSchema.nodes.length">
-      <n-upload v-if="fileState === 'nofile'" accept="application/json" :show-file-list="false" :on-change="handleFileChange">
+      <n-upload
+        v-if="fileState === 'nofile'"
+        accept="application/json"
+        :show-file-list="false"
+        :on-change="handleFileChange"
+      >
         <n-upload-dragger>
           <div class="mb-2">
             <n-icon size="48" :depth="3">
@@ -77,10 +90,20 @@ const handleFileChange = async({ file }: { file: UploadFileInfo }): Promise<void
               </h3>
               <template v-if="node.id && current === node.id">
                 <n-input-group>
-                  <n-button size="small" ghost :type="node.value === true? 'primary' : 'default'" @click="(node.value = true, node.answer = '')">
+                  <n-button
+                    size="small"
+                    ghost
+                    :type="node.value === true ? 'primary' : 'default'"
+                    @click=";(node.value = true), (node.answer = '')"
+                  >
                     Да
                   </n-button>
-                  <n-button size="small" ghost :type="node.value === false ? 'primary' : 'default'" @click="(node.value = false, node.answer = '')">
+                  <n-button
+                    size="small"
+                    ghost
+                    :type="node.value === false ? 'primary' : 'default'"
+                    @click=";(node.value = false), (node.answer = '')"
+                  >
                     Нет
                   </n-button>
                 </n-input-group>
@@ -93,8 +116,16 @@ const handleFileChange = async({ file }: { file: UploadFileInfo }): Promise<void
               <n-alert v-if="node.value === null" type="info">
                 Ответьте на вопрос выше нажав на кнопку "Да" или "Нет"
               </n-alert>
-              <ec-survey-options v-model:node="enrichedSchema.nodes[nodeIndex]" />
-              <ec-survey-controls v-model:current="current" :disabled-next="!isNodeCompleted(node)" class="mt-4" :total="totalQuestions" @click:finish="handleFinish" />
+              <ec-survey-options
+                v-model:node="enrichedSchema.nodes[nodeIndex]"
+              />
+              <ec-survey-controls
+                v-model:current="current"
+                :disabled-next="!isNodeCompleted(node)"
+                class="mt-4"
+                :total="totalQuestions"
+                @click:finish="handleFinish"
+              />
             </div>
           </collapse-transition>
         </ec-survey-step>

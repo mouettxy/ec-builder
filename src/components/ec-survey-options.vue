@@ -7,7 +7,6 @@ const props = defineProps({
     required: true,
     type: Object as PropType<ECNode>,
   },
-
 })
 
 const emits = defineEmits(['update:node'])
@@ -18,7 +17,10 @@ const nodeModel = useVModel(props, 'node', emits)
 <template>
   <n-radio-group v-model:value="nodeModel.answer" class="space-y-2">
     <div class="flex flex-col space-y-2">
-      <template v-for="(option, optionIndex) in nodeModel.options" :key="option._id">
+      <template
+        v-for="(option, optionIndex) in nodeModel.options"
+        :key="option._id"
+      >
         <template v-if="option.type === 'option'">
           <n-radio
             v-if="option.when === nodeModel.value"
@@ -35,7 +37,10 @@ const nodeModel = useVModel(props, 'node', emits)
           </n-radio>
         </template>
         <template v-if="option.type === 'node' && nodeModel.options">
-          <ec-survey-subnode v-if="option.when === nodeModel.value" v-model:node="nodeModel.options[optionIndex]" />
+          <ec-survey-subnode
+            v-if="option.when === nodeModel.value"
+            v-model:node="nodeModel.options[optionIndex]"
+          />
         </template>
       </template>
     </div>

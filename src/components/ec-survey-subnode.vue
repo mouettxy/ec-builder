@@ -7,7 +7,6 @@ const props = defineProps({
     required: true,
     type: Object as PropType<ECNode>,
   },
-
 })
 
 const emits = defineEmits(['update:node'])
@@ -24,10 +23,20 @@ const nodeModel = useVModel(props, 'node', emits)
         </n-text>
       </h3>
       <n-input-group>
-        <n-button size="small" ghost :type="nodeModel.value === true? 'primary' : 'default'" @click="(nodeModel.value = true, nodeModel.answer = '')">
+        <n-button
+          size="small"
+          ghost
+          :type="nodeModel.value === true ? 'primary' : 'default'"
+          @click=";(nodeModel.value = true), (nodeModel.answer = '')"
+        >
           Да
         </n-button>
-        <n-button size="small" ghost :type="nodeModel.value === false ? 'primary' : 'default'" @click="(nodeModel.value = false, nodeModel.answer = '')">
+        <n-button
+          size="small"
+          ghost
+          :type="nodeModel.value === false ? 'primary' : 'default'"
+          @click=";(nodeModel.value = false), (nodeModel.answer = '')"
+        >
           Нет
         </n-button>
       </n-input-group>

@@ -3,8 +3,20 @@
     "@antfu",
     "prettier"
   ],
+  "plugins": [
+    "prettier"
+  ],
   "rules": {
-    "prettier/prettier": "error",
+    "prettier/prettier": ["error", {
+      "singleQuote": true,
+      "bracketSpacing": true,
+      "arrowParens": "always",
+      "max-len": ["error", 80, 2],
+      "tabWidth": 2,
+      "useTabs": false,
+      "endOfLine": "auto",
+      "semi": false
+    }],
     "no-console": "warn",
     "curly": ["error", "all"],
     "new-cap": "off"

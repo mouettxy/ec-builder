@@ -13,7 +13,11 @@ defineProps({
 
 const emits = defineEmits(['file-change'])
 
-const handleFileChange = async({ file }: { file: UploadFileInfo }): Promise<void> => {
+const handleFileChange = async ({
+  file,
+}: {
+  file: UploadFileInfo
+}): Promise<void> => {
   const uploadedFile = await uploadSchema(file)
   emits('file-change', {
     fileState: uploadedFile.fileState,
@@ -24,12 +28,20 @@ const handleFileChange = async({ file }: { file: UploadFileInfo }): Promise<void
 
 const handleEnter = (element: Element, done: () => void) => {
   const el = element as HTMLElement
-  animate(el, { scale: [0.7, 1] }, { easing: spring({ damping: 30 }) }).finished.then(() => done())
+  animate(
+    el,
+    { scale: [0.7, 1] },
+    { easing: spring({ damping: 30 }) }
+  ).finished.then(() => done())
 }
 
 const handleFileLeave = (element: Element, done: () => void) => {
   const el = element as HTMLElement
-  animate(el, { scale: 0.5, opacity: 0, y: -100, display: 'absolute' }, { easing: spring({ damping: 30 }) }).finished.then(() => done())
+  animate(
+    el,
+    { scale: 0.5, opacity: 0, y: -100, display: 'absolute' },
+    { easing: spring({ damping: 30 }) }
+  ).finished.then(() => done())
 }
 
 const handleChipsLeave = (element: Element, done: () => void) => {
@@ -39,13 +51,13 @@ const handleChipsLeave = (element: Element, done: () => void) => {
 </script>
 
 <template>
-  <transition
-    appear
-    @enter="handleEnter"
-    @leave="handleFileLeave"
-  >
+  <transition appear @enter="handleEnter" @leave="handleFileLeave">
     <div v-if="status === 'file'">
-      <n-upload accept="application/json" :show-file-list="false" :on-change="handleFileChange">
+      <n-upload
+        accept="application/json"
+        :show-file-list="false"
+        :on-change="handleFileChange"
+      >
         <n-upload-dragger>
           <div class="mb-2">
             <n-icon size="48" :depth="3">
@@ -60,11 +72,7 @@ const handleChipsLeave = (element: Element, done: () => void) => {
     </div>
   </transition>
 
-  <transition
-    appear
-    @enter="handleEnter"
-    @leave="handleChipsLeave"
-  >
+  <transition appear @enter="handleEnter" @leave="handleChipsLeave">
     <div v-if="status === 'chips'">
       <slot />
     </div>

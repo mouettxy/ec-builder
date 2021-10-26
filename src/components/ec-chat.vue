@@ -28,7 +28,18 @@ watch([messagesLength], () => {
 </script>
 
 <template>
-  <div ref="chat" class="ec-chat relative space-y-4 py-4 overflow-y-auto overflow-x-hidden flex flex-col px-6">
+  <div
+    ref="chat"
+    class="
+      ec-chat
+      relative
+      space-y-4
+      py-4
+      overflow-y-auto overflow-x-hidden
+      flex flex-col
+      px-6
+    "
+  >
     <ec-chat-message
       v-for="message in messages"
       :key="message.id"
@@ -48,11 +59,11 @@ watch([messagesLength], () => {
 }
 
 .ec-chat::-webkit-scrollbar-track {
-  background-color:#fff;
+  background-color: #fff;
 }
 
 .ec-chat::-webkit-scrollbar-thumb {
-  background-color:#dedee2;
+  background-color: #dedee2;
   width: 2px;
 }
 </style>

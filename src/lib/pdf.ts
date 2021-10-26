@@ -11,7 +11,9 @@ export function createPdf(name: string, answers: Answers) {
   const ctx: any[] = []
 
   ctx.push({
-    text: name, fontSize: 16, alignment: 'center',
+    text: name,
+    fontSize: 16,
+    alignment: 'center',
   })
 
   ctx.push(' ')
@@ -19,11 +21,15 @@ export function createPdf(name: string, answers: Answers) {
 
   answers.forEach((answer) => {
     ctx.push({
-      text: `${answer.question} (${answer.questionAnswer})`, fontSize: 12, margin: [answer.indent, 4, 0, 4],
+      text: `${answer.question} (${answer.questionAnswer})`,
+      fontSize: 12,
+      margin: [answer.indent, 4, 0, 4],
     })
     if (answer.selectedOption) {
       ctx.push({
-        text: `${answer.selectedOption}`, fontSize: 11, margin: [answer.indent + 16, 4, 0, 4],
+        text: `${answer.selectedOption}`,
+        fontSize: 11,
+        margin: [answer.indent + 16, 4, 0, 4],
       })
     }
   })

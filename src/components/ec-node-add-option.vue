@@ -43,14 +43,15 @@ const nodeModel = useVModel(props, 'node', emits)
 
 const handleSelect = (key: 'option' | 'node') => {
   if (nodeModel.value.options) {
-    if (key === 'option') { addNodeOption(nodeModel.value, props.when) }
-
-    else if (key === 'node') { addNodeChild(nodeModel.value, props.when) }
+    if (key === 'option') {
+      addNodeOption(nodeModel.value, props.when)
+    } else if (key === 'node') {
+      addNodeChild(nodeModel.value, props.when)
+    }
 
     modal.value = false
   }
 }
-
 </script>
 
 <template>

@@ -24,13 +24,25 @@ const optionModel = useVModel(props, 'option', emits)
     <div class="flex">
       <div class="w-full">
         <n-input-group>
-          <n-button dashed :type="optionModel.when ? 'info' : 'default'" @click="optionModel.when = true">
+          <n-button
+            dashed
+            :type="optionModel.when ? 'info' : 'default'"
+            @click="optionModel.when = true"
+          >
             Да
           </n-button>
-          <n-button dashed :type="!optionModel.when ? 'info' : 'default'" @click="optionModel.when = false">
+          <n-button
+            dashed
+            :type="!optionModel.when ? 'info' : 'default'"
+            @click="optionModel.when = false"
+          >
             Нет
           </n-button>
-          <n-input v-model:value="optionModel.title" type="text" placeholder="Введите опцию" />
+          <n-input
+            v-model:value="optionModel.title"
+            type="text"
+            placeholder="Введите опцию"
+          />
           <n-button ghost @click="emits('delete:option', option)">
             <template #icon>
               <n-icon><bx-bx-trash /></n-icon>
