@@ -25,7 +25,7 @@ const totalQuestions = computed(() => {
 })
 
 const handleFinish = () => {
-  const { answers } = useSchemaAnswers()
+  const { answers } = useSchemaAnswers(enrichedSchema.value.nodes)
   current.value = 1
   fileState.value = 'nofile'
   notification.success('Файл успешно сформирован, начинаем скачивание')

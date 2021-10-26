@@ -174,14 +174,13 @@ export function isNodeCompleted(node: ECNode) {
   return !!node.answer
 }
 
-export function useSchemaAnswers() {
+export function useSchemaAnswers(nodes: ECNode[]) {
   const answers: Ref<Answers> = ref([])
 
   const getNodeAnswers = (node: ECNode, indent: number) => {
     const question = `${node.computedId || `${node.id}.`} ${node.title}`
     const questionAnswer = node.value ? 'Да' : 'Нет'
     const selectedOption = node.answer || ''
-    const hasSubnodes = node.options?.some((nodeEl) => nodeEl.type === 'node')
 
     answers.value.push({
       question,
@@ -190,16 +189,17 @@ export function useSchemaAnswers() {
       indent,
     })
 
+    const hasSubnodes = node.options?.some((nodeEl) => nodeEl.type === 'node')
     if (hasSubnodes) {
       node.options?.forEach((nodeOption) => {
-        if (nodeOption.type === 'node') {
+        if (nodeOption.type === 'node' && node.value === nodeOption.when) {
           getNodeAnswers(nodeOption, indent + 8)
         }
       })
     }
   }
 
-  schema.nodes.forEach((node) => getNodeAnswers(node, 0))
+  nodes.forEach((node) => getNodeAnswers(node, 0))
 
   return { answers }
 }
