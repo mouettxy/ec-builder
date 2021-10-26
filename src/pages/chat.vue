@@ -2,6 +2,7 @@
 import { Ref } from '@vue/reactivity'
 import cloneDeep from 'lodash.clonedeep'
 import { nanoid } from 'nanoid'
+import { animate, spring, stagger } from 'motion'
 import { useMessages, useMessagesControls } from '~/lib/chat'
 import { FileState } from '~/lib/file'
 import { Answers, createPdf } from '~/lib/pdf'
@@ -14,6 +15,27 @@ const fileState = ref('nofile') as Ref<FileState>
 const toolbarStatus = ref('file')
 const questions: Ref<(ECNode & { parent?: string })[] | null> = ref(null)
 const currentQuestionIndex = ref(0)
+
+const handleEnter = async(element: Element, done: any) => {
+  await animate('.stagger', {
+    opacity: [0, 1],
+    x: [100, 0],
+  }, {
+    delay: stagger(0.1, { start: 0 }),
+    easing: spring({ velocity: 100, damping: 100 }),
+  }).finished
+  done()
+}
+
+const handleLeave = async(element: Element, done: any) => {
+  await animate('.stagger', {
+    opacity: [1, 0],
+    x: [0, -100],
+  }, {
+    easing: spring({ velocity: 100, damping: 100 }),
+  }).finished
+  done()
+}
 
 const handleFileChange = (data: { fileName: string; fileState: Ref<FileState> }) => {
   fileState.value = data.fileState.value
@@ -165,11 +187,6 @@ const handleChipClick = (chip: any) => {
     if (currentQuestionIndex.value === -1) {
       chip.value = true
 
-      addMessagePair({
-        toText: chip.title,
-        fromText: 'Заполнение инструкции завершено, скачивание запущено',
-      })
-
       const buildAnswers = (questions: any) => {
         const answers: Ref<Answers> = ref([])
 
@@ -200,12 +217,13 @@ const handleChipClick = (chip: any) => {
 
         return { answers }
       }
-
       const { answers } = buildAnswers(questions.value)
 
       createPdf(enrichedSchema.value.name, answers.value)
 
       addMessages([
+        { to: true, type: 'text', text: chip.title },
+        { from: true, type: 'text', text: 'Заполнение инструкции завершено, скачивание запущено', avatar: true },
         { from: true, type: 'text', text: 'Загрузить ещё одну схему инструкции?', chips: [{ id: nanoid(), title: 'Да', type: 'new-schema' }] },
       ])
     }
@@ -231,17 +249,40 @@ const handleChipClick = (chip: any) => {
       </h3>
     </div>
     <ec-chat class="flex-grow" :messages="messages" />
-    <div class="flex-shrink-0 px-6 py-6">
+    <div class="flex-shrink-0 px-6 py-4">
       <ec-chat-toolbar v-model:status="toolbarStatus" @file-change="handleFileChange">
-        <div class="flex flex-nowrap space-x-4 overflow-x-auto">
-          <n-button v-for="chip in lastMessage.chips" :key="chip._id" class="rounded-full" type="primary" @click="handleChipClick(chip)">
+        <transition-group
+          tag="div"
+          mode="out-in"
+          class="chat-tools flex flex-nowrap space-x-4 py-2 overflow-x-auto"
+          appear
+          @enter="handleEnter"
+          @leave="handleLeave"
+        >
+          <n-button v-for="chip in lastMessage.chips" :key="chip._id || chip.id" class="stagger !outline-none rounded-full" type="primary" @click.once="handleChipClick(chip)">
             {{ chip.title }}
           </n-button>
-        </div>
+        </transition-group>
       </ec-chat-toolbar>
     </div>
   </div>
 </template>
+
+<style>
+.chat-tools::-webkit-scrollbar {
+  background-color: #fff;
+  height: 4px;
+}
+
+.chat-tools::-webkit-scrollbar-track {
+  background-color:#fff;
+}
+
+.chat-tools::-webkit-scrollbar-thumb {
+  background-color:#dedee2;
+  width: 2px;
+}
+</style>
 
 <route lang="yaml">
 name: chat

@@ -4,8 +4,8 @@ import { GlobalThemeOverrides, NConfigProvider } from 'naive-ui'
 const themeOverrides: GlobalThemeOverrides = {
   common: {
     primaryColor: '#3590f3',
-    primaryColorHover: '#3590f3',
-    primaryColorPressed: '#3590f3',
+    primaryColorHover: '#3082db',
+    primaryColorPressed: '#2a73c2',
     infoColor: '#28c2ff',
     successColor: '#38b000',
     errorColor: '#A31621',

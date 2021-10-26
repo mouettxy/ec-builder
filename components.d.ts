@@ -6,6 +6,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     BxBxArchive: typeof import('~icons/bx/bx-archive')['default']
     BxBxCheck: typeof import('~icons/bx/bx-check')['default']
+    BxBxChevronDown: typeof import('~icons/bx/bx-chevron-down')['default']
     BxBxChevronLeft: typeof import('~icons/bx/bx-chevron-left')['default']
     BxBxChevronRight: typeof import('~icons/bx/bx-chevron-right')['default']
     BxBxDotsHorizontal: typeof import('~icons/bx/bx-dots-horizontal')['default']

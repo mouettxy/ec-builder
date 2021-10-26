@@ -37,7 +37,12 @@ export function useMessagesControls() {
   }
 
   const addMessages = (messagesToAdd: Omit<Message, 'id'>[]) => {
-    messagesToAdd.forEach(message => addMessage(message))
+    let stagger = 0
+
+    messagesToAdd.forEach((message) => {
+      setTimeout(() => addMessage(message), stagger)
+      stagger += 500
+    })
   }
 
   const addMessagePair = ({ toText, fromText, options }: {toText: string; fromText: string; options?: any[]}) => {

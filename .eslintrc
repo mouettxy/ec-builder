@@ -1,8 +1,10 @@
 {
   "extends": [
-    "@antfu"
+    "@antfu",
+    "prettier"
   ],
   "rules": {
+    "prettier/prettier": "error",
     "no-console": "warn",
     "curly": ["error", "all"],
     "new-cap": "off"
