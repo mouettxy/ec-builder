@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { UploadFileInfo } from 'naive-ui'
+import { uploadSchema } from '~/lib/file'
 import {
   addNode,
   deleteNode,
@@ -15,6 +17,9 @@ const handleNodeDelete = (node: ECNode, parent: ECNode | null) =>
 const handleAddTopLevelNode = () => addNode(schema.nodes)
 const handleReset = () => resetSchema()
 const handleSaveSchema = () => schemaToFile()
+
+const handleFileChange = ({ file }: { file: UploadFileInfo }): Promise<any> =>
+  uploadSchema(file)
 </script>
 
 <template>
@@ -45,9 +50,19 @@ const handleSaveSchema = () => schemaToFile()
           @delete:node="handleNodeDelete"
         />
       </div>
-      <n-button dashed type="info" @click="handleAddTopLevelNode">
-        Добавить вопрос
-      </n-button>
+      <div class="flex space-x-4">
+        <n-button dashed type="info" @click="handleAddTopLevelNode">
+          Добавить вопрос
+        </n-button>
+        <n-upload
+          v-if="!schema.nodes.length"
+          accept="application/json"
+          :show-file-list="false"
+          :on-change="handleFileChange"
+        >
+          <n-button dashed type="default">Загрузить схему</n-button>
+        </n-upload>
+      </div>
       <n-button
         v-if="schema.nodes.length"
         class="mt-4"
