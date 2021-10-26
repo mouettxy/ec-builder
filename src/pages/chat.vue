@@ -7,7 +7,7 @@ import { FileState } from '~/lib/file'
 import { ECNode, useEnrichedSchema } from '~/lib/schema'
 
 const { messages, lastMessage } = useMessages()
-const { addMessages } = useMessagesControls()
+const { addMessages, addMessagePair } = useMessagesControls()
 const { enrichedSchema } = useEnrichedSchema()
 const fileState = ref('nofile') as Ref<FileState>
 const toolbarStatus = ref('file')
@@ -77,36 +77,14 @@ const getYesNoChips = () => [
   { id: nanoid(), title: 'Нет', type: 'answer' },
 ]
 
-const addYesNoMessages = (to: string, from: string) => {
-  addMessages([
-    { to: true, type: 'text', text: to },
-    {
-      from: true,
-      avatar: true,
-      type: 'text',
-      text: from,
-      chips: getYesNoChips(),
-    },
-  ])
-}
-
-const addChipMessages = (to: string, from: string, options: any[]) => {
-  addMessages([
-    { to: true, type: 'text', text: to },
-    {
-      from: true,
-      avatar: true,
-      type: 'text',
-      text: from,
-      chips: options,
-    },
-  ])
-}
-
 const handleChipClick = (chip: any) => {
   if (!questions.value) {
     questions.value = useQuestions(buildSchemaFromId(chip._id).value.nodes).value
-    addYesNoMessages(`Начать инструкцию с вопроса "${chip.title}"`, chip.title)
+    addMessagePair({
+      toText: `Начать инструкцию с вопроса "${chip.title}"`,
+      fromText: chip.title,
+      options: getYesNoChips(),
+    })
     return
   }
 
@@ -149,31 +127,41 @@ const handleChipClick = (chip: any) => {
 
     if (currentQuestion.options?.length) {
       // if question has relevant options
-      addChipMessages(chip.title, 'Выберите один из вариантов ответа', currentQuestion.options)
+      addMessagePair({
+        toText: chip.title,
+        fromText: 'Выберите один из вариантов ответа',
+        options: currentQuestion.options,
+      })
     }
     else {
       // if next relevant option is also question
       currentQuestionIndex.value = getNextQuestionIndex()
       currentQuestion = questions.value[currentQuestionIndex.value]
-      addYesNoMessages(chip.title, currentQuestion.title)
+      addMessagePair({
+        toText: chip.title,
+        fromText: currentQuestion.title,
+        options: getYesNoChips(),
+      })
     }
   }
   else {
     currentQuestionIndex.value = getNextQuestionIndex()
     if (currentQuestionIndex.value === -1) {
-      addMessages([
-        { to: true, type: 'text', text: chip.title },
-        {
-          from: true,
-          avatar: true,
-          type: 'text',
-          text: 'Заполнение инструкции завершено, скачивание запущено',
-        },
-      ])
+      addMessagePair({
+        toText: chip.title,
+        fromText: 'Заполнение инструкции завершено, скачивание запущено',
+      })
+
+      console.log(questions.value)
     }
     else {
       const currentQuestion = questions.value[currentQuestionIndex.value]
-      addYesNoMessages(chip.title, currentQuestion.title)
+
+      addMessagePair({
+        toText: chip.title,
+        fromText: currentQuestion.title,
+        options: getYesNoChips(),
+      })
     }
   }
 }

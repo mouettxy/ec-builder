@@ -40,7 +40,22 @@ export function useMessagesControls() {
     messagesToAdd.forEach(message => addMessage(message))
   }
 
-  return { addMessage, addMessages }
+  const addMessagePair = ({ toText, fromText, options }: {toText: string; fromText: string; options?: any[]}) => {
+    if (options) {
+      addMessages([
+        { to: true, type: 'text', text: toText },
+        { from: true, type: 'text', text: fromText, avatar: true, chips: options },
+      ])
+    }
+    else {
+      addMessages([
+        { to: true, type: 'text', text: toText },
+        { from: true, type: 'text', text: fromText, avatar: true },
+      ])
+    }
+  }
+
+  return { addMessage, addMessages, addMessagePair }
 }
 
 export function useChatHello() {
