@@ -15,34 +15,50 @@ const fileState = ref('nofile') as Ref<FileState>
 const toolbarStatus = ref('file')
 const questions: Ref<(ECNode & { parent?: string })[] | null> = ref(null)
 const currentQuestionIndex = ref(0)
+const toolbar: any = ref(null)
 
 const handleEnter = async (element: Element, done: any) => {
-  await animate(
+  animate(
     '.stagger',
     {
       opacity: [0, 1],
       x: [100, 0],
     },
     {
-      delay: stagger(0.1, { start: 0 }),
+      delay: stagger(0.2, { start: 0 }),
       easing: spring({ velocity: 100, damping: 100 }),
     }
-  ).finished
+  ).finished.then(() => done())
+}
+
+const handleLeave = (element: Element, done: any) => {
   done()
 }
 
-const handleLeave = async (element: Element, done: any) => {
-  await animate(
-    '.stagger',
-    {
-      opacity: [1, 0],
-      x: [0, -100],
-    },
-    {
-      easing: spring({ velocity: 100, damping: 100 }),
+const animateClick = (event: Event) => {
+  if (event.target) {
+    const el = event
+      .composedPath()
+      .find((e: any) => e.classList?.contains('stagger')) as HTMLElement
+
+    if (toolbar.value.$el) {
+      const clone = el.cloneNode(true) as HTMLElement
+      toolbar.value.$el.appendChild(clone)
+      clone.style.position = 'absolute'
+
+      animate(
+        clone as Element,
+        {
+          x: 400,
+          y: -60,
+          opacity: 0,
+        },
+        {
+          duration: 0.7,
+        }
+      ).finished.then(() => toolbar.value.$el.removeChild(clone))
     }
-  ).finished
-  done()
+  }
 }
 
 const handleFileChange = (data: {
@@ -108,11 +124,17 @@ const useQuestions = (nodes: ECNode[]) => {
 }
 
 const getYesNoChips = (type = 'answer') => [
-  { id: nanoid(), title: 'Да', type },
-  { id: nanoid(), title: 'Нет', type },
+  { _id: nanoid(), title: 'Да', type },
+  { _id: nanoid(), title: 'Нет', type },
 ]
 
-const handleChipClick = (chip: any) => {
+const handleChipClick = (chip: any, event: Event) => {
+  animateClick(event)
+
+  if (lastMessage.value.chips) {
+    lastMessage.value.chips.forEach((e) => (e.disabled = true))
+  }
+
   if (chip.type === 'new-schema') {
     fileState.value = 'nofile'
     toolbarStatus.value = 'file'
@@ -276,7 +298,7 @@ const handleChipClick = (chip: any) => {
 </script>
 
 <template>
-  <div class="flex flex-col shadow-lg h-screen w-[980px]">
+  <div class="flex flex-col shadow-lg h-screen w-full lg:w-[980px]">
     <div
       class="
         flex-shrink-0 flex
@@ -294,9 +316,19 @@ const handleChipClick = (chip: any) => {
         @file-change="handleFileChange"
       >
         <transition-group
+          ref="toolbar"
           tag="div"
           mode="out-in"
-          class="chat-tools flex flex-nowrap space-x-4 py-2 overflow-x-auto"
+          class="
+            chat-tools
+            min-h-[50px]
+            w-auto
+            overflow-y-hidden
+            flex flex-nowrap
+            py-2
+            overflow-x-auto
+          "
+          move-class="move"
           appear
           @enter="handleEnter"
           @leave="handleLeave"
@@ -304,9 +336,10 @@ const handleChipClick = (chip: any) => {
           <n-button
             v-for="chip in lastMessage.chips"
             :key="chip._id || chip.id"
-            class="stagger !outline-none rounded-full"
+            :disabled="!!chip.disabled"
+            class="stagger !outline-none rounded-full mr-4"
             type="primary"
-            @click.once="handleChipClick(chip)"
+            @click="handleChipClick(chip, $event)"
           >
             {{ chip.title }}
           </n-button>
@@ -317,6 +350,9 @@ const handleChipClick = (chip: any) => {
 </template>
 
 <style>
+.move {
+  transition: transform 1s;
+}
 .chat-tools::-webkit-scrollbar {
   background-color: #fff;
   height: 4px;
