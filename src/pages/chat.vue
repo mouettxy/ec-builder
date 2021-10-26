@@ -4,7 +4,8 @@ import cloneDeep from 'lodash.clonedeep'
 import { nanoid } from 'nanoid'
 import { useMessages, useMessagesControls } from '~/lib/chat'
 import { FileState } from '~/lib/file'
-import { ECNode, useEnrichedSchema } from '~/lib/schema'
+import { Answers, createPdf } from '~/lib/pdf'
+import { ECNode, resetSchema, useEnrichedSchema } from '~/lib/schema'
 
 const { messages, lastMessage } = useMessages()
 const { addMessages, addMessagePair } = useMessagesControls()
@@ -47,6 +48,7 @@ const useQuestions = (nodes: ECNode[]) => {
     questions.value.push({
       _id: node._id,
       id: node.id,
+      computedId: node.computedId,
       type: 'question',
       title: node.title,
       parent: node.parent,
@@ -72,12 +74,25 @@ const useQuestions = (nodes: ECNode[]) => {
   return questions
 }
 
-const getYesNoChips = () => [
-  { id: nanoid(), title: 'Да', type: 'answer' },
-  { id: nanoid(), title: 'Нет', type: 'answer' },
+const getYesNoChips = (type = 'answer') => [
+  { id: nanoid(), title: 'Да', type },
+  { id: nanoid(), title: 'Нет', type },
 ]
 
 const handleChipClick = (chip: any) => {
+  if (chip.type === 'new-schema') {
+    fileState.value = 'nofile'
+    toolbarStatus.value = 'file'
+    questions.value = null
+    currentQuestionIndex.value = 0
+    resetSchema()
+
+    addMessages(
+      [{ from: true, type: 'file', text: 'Загрузите схему инструкции что-бы продолжить' }],
+    )
+    return
+  }
+
   if (!questions.value) {
     questions.value = useQuestions(buildSchemaFromId(chip._id).value.nodes).value
     addMessagePair({
@@ -102,19 +117,19 @@ const handleChipClick = (chip: any) => {
 
   const getNextQuestionIndex = (): number => {
     if (questions.value) {
-      if (!questions.value[currentQuestionIndex.value]) {
+      if (questions.value[currentQuestionIndex.value] === undefined) {
         return -1
       }
     }
 
     return questions.value?.findIndex((question, questionIndex) => {
       if (question.value !== null) { return false }
-      if (!questions.value) { return false }
+      if (questions.value === null) { return false }
       if (questionIndex === currentQuestionIndex.value) { return false }
-      if (question.when !== questions.value[currentQuestionIndex.value].value) { return false }
+      // if (question.when !== questions.value[currentQuestionIndex.value].value) { return false }
 
       return true
-    }) || 0
+    }) || -1
   }
 
   if (chip.type === 'answer') {
@@ -146,16 +161,57 @@ const handleChipClick = (chip: any) => {
   }
   else {
     currentQuestionIndex.value = getNextQuestionIndex()
+
     if (currentQuestionIndex.value === -1) {
+      chip.value = true
+
       addMessagePair({
         toText: chip.title,
         fromText: 'Заполнение инструкции завершено, скачивание запущено',
       })
 
-      console.log(questions.value)
+      const buildAnswers = (questions: any) => {
+        const answers: Ref<Answers> = ref([])
+
+        questions.forEach((q: any) => {
+          const questionId = q.computedId || `${q.id}.`
+          const question = `${questionId} ${q.title}`
+          const questionAnswer = q.value ? 'Да' : 'Нет'
+          const selectedOption = q.options.find((e: any) => e.value)
+
+          if (selectedOption) {
+            const indent = (questionId.split('.').filter((e: string) => e).length - 1) * 8
+            answers.value.push({
+              question,
+              questionAnswer,
+              selectedOption: `${selectedOption.computedId} ${selectedOption.title}`,
+              indent,
+            })
+          }
+          else {
+            answers.value.push({
+              question,
+              questionAnswer,
+              selectedOption: '',
+              indent: 0,
+            })
+          }
+        })
+
+        return { answers }
+      }
+
+      const { answers } = buildAnswers(questions.value)
+
+      createPdf(enrichedSchema.value.name, answers.value)
+
+      addMessages([
+        { from: true, type: 'text', text: 'Загрузить ещё одну схему инструкции?', chips: [{ id: nanoid(), title: 'Да', type: 'new-schema' }] },
+      ])
     }
     else {
       const currentQuestion = questions.value[currentQuestionIndex.value]
+      chip.value = true
 
       addMessagePair({
         toText: chip.title,
