@@ -17,7 +17,7 @@ const questions: Ref<(ECNode & { parent?: string })[] | null> = ref(null)
 const currentQuestionIndex = ref(0)
 const toolbar: any = ref(null)
 
-const handleEnter = async (element: Element, done: any) => {
+const handleEnter = async (_: Element, done: () => void) => {
   animate(
     '.stagger',
     {
@@ -25,14 +25,10 @@ const handleEnter = async (element: Element, done: any) => {
       x: [100, 0],
     },
     {
-      delay: stagger(0.2, { start: 0 }),
+      delay: stagger(0.2),
       easing: spring({ velocity: 100, damping: 100 }),
     }
   ).finished.then(() => done())
-}
-
-const handleLeave = (element: Element, done: any) => {
-  done()
 }
 
 const animateClick = (event: Event) => {
@@ -319,6 +315,7 @@ const handleChipClick = (chip: any, event: Event) => {
           ref="toolbar"
           tag="div"
           mode="out-in"
+          :css="false"
           class="
             chat-tools
             min-h-[50px]
@@ -328,16 +325,14 @@ const handleChipClick = (chip: any, event: Event) => {
             py-2
             overflow-x-auto
           "
-          move-class="move"
           appear
           @enter="handleEnter"
-          @leave="handleLeave"
         >
           <n-button
             v-for="chip in lastMessage.chips"
             :key="chip._id || chip.id"
             :disabled="!!chip.disabled"
-            class="stagger !outline-none rounded-full mr-4"
+            class="stagger !outline-none rounded-full mr-4 transition-none"
             type="primary"
             @click="handleChipClick(chip, $event)"
           >
@@ -350,9 +345,6 @@ const handleChipClick = (chip: any, event: Event) => {
 </template>
 
 <style>
-.move {
-  transition: transform 1s;
-}
 .chat-tools::-webkit-scrollbar {
   background-color: #fff;
   height: 4px;
