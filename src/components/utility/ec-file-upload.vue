@@ -68,4 +68,8 @@ const handleChange = (data: {
 .ec-file-upload--big .n-upload-trigger {
   @apply w-full;
 }
+
+.ec-file-upload--small .n-upload-trigger {
+  @apply w-full;
+}
 </style>
