@@ -2,7 +2,7 @@
 import { Ref } from '@vue/reactivity'
 import cloneDeep from 'lodash.clonedeep'
 import { nanoid } from 'nanoid'
-import { animate, spring, stagger } from 'motion'
+import { animate } from 'motion'
 import { useMessages, useMessagesControls } from '~/lib/chat'
 import { FileState } from '~/lib/file'
 import { Answers, createPdf } from '~/lib/pdf'
@@ -16,20 +16,6 @@ const toolbarStatus = ref('file')
 const questions: Ref<(ECNode & { parent?: string })[] | null> = ref(null)
 const currentQuestionIndex = ref(0)
 const toolbar: any = ref(null)
-
-const handleEnter = async (_: Element, done: () => void) => {
-  animate(
-    '.stagger',
-    {
-      opacity: [0, 1],
-      x: [100, 0],
-    },
-    {
-      delay: stagger(0.2),
-      easing: spring({ velocity: 100, damping: 100 }),
-    }
-  ).finished.then(() => done())
-}
 
 const animateClick = (event: Event) => {
   if (event.target) {
@@ -321,23 +307,7 @@ const handleChipClick = (chip: any, event: Event) => {
         v-model:status="toolbarStatus"
         @file-change="handleFileChange"
       >
-        <transition-group
-          ref="toolbar"
-          tag="div"
-          mode="out-in"
-          :css="false"
-          class="
-            chat-tools
-            min-h-[50px]
-            w-auto
-            overflow-y-hidden
-            flex flex-nowrap
-            py-2
-            overflow-x-auto
-          "
-          appear
-          @enter="handleEnter"
-        >
+        <ec-chat-tools-transition ref="toolbar" tag="div" class="chat-tools">
           <n-button
             v-for="chip in lastMessage.chips"
             :key="chip._id || chip.id"
@@ -348,13 +318,17 @@ const handleChipClick = (chip: any, event: Event) => {
           >
             {{ chip.title }}
           </n-button>
-        </transition-group>
+        </ec-chat-tools-transition>
       </ec-chat-toolbar>
     </div>
   </div>
 </template>
 
 <style>
+.chat-tools {
+  @apply min-h-[50px] w-auto overflow-y-hidden flex flex-nowrap py-2 overflow-x-auto;
+}
+
 .chat-tools::-webkit-scrollbar {
   background-color: #fff;
   height: 4px;

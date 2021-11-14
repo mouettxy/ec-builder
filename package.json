@@ -8,7 +8,6 @@
     "lint": "eslint --fix src/**/*"
   },
   "dependencies": {
-    "@ivanv/vue-collapse-transition": "1.0.2",
     "@vueuse/core": "6.8.0",
     "file-saver": "2.0.5",
     "lodash.clonedeep": "4.5.0",
@@ -47,6 +46,7 @@
       "include": [
         "file-saver",
         "lodash.clonedeep",
+        "motion",
         "naive-ui",
         "nanoid"
       ]

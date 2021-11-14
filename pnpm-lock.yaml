@@ -3,7 +3,6 @@ lockfileVersion: 5.3
 specifiers:
   '@antfu/eslint-config': 0.10.0
   '@iconify-json/bx': ^1.0.1
-  '@ivanv/vue-collapse-transition': 1.0.2
   '@types/file-saver': 2.0.3
   '@types/lodash': 4.14.176
   '@types/lodash.clonedeep': 4.5.6
@@ -34,7 +33,6 @@ specifiers:
   vue-router: 4.0.11
 
 dependencies:
-  '@ivanv/vue-collapse-transition': 1.0.2
   '@vueuse/core': 6.8.0_vue@3.2.19
   file-saver: 2.0.5
   lodash.clonedeep: 4.5.0
@@ -494,10 +492,6 @@ packages:
     dependencies:
       '@iconify/types': 1.0.10
     dev: true
-
-  /@ivanv/vue-collapse-transition/1.0.2:
-    resolution: {integrity: sha512-eWEameFXJM/1khcoKbITvKjYYXDP1WKQ/Xf9ItJVPoEjCiOdocR3AgDAERzDrNNg4oWK28gRGi+0ft8Te27zxw==}
-    dev: false
 
   /@jest/types/26.6.2:
     resolution: {integrity: sha512-fC6QCp7Sc5sX6g8Tvbmj4XUTbyrik0akgRy03yjXbQaBWWNWGE7SGtJk98m0N8nzegD/7SggrUlivxo5ax4KWQ==}

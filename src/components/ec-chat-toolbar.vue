@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { animate } from 'motion'
 import { UploadFileInfo } from 'naive-ui'
 import { uploadSchema } from '~/lib/file'
 
@@ -25,32 +24,11 @@ const handleFileChange = async ({
     fileName: file.name,
   })
 }
-
-const handleEnter = (element: Element, done: () => void) => {
-  const el = element as HTMLElement
-  animate(el, { scale: [0.7, 1] }, { duration: 0.3 }).finished.then(() =>
-    done()
-  )
-}
-
-const handleFileLeave = (element: Element, done: () => void) => {
-  const el = element as HTMLElement
-  animate(
-    el,
-    { scale: 0.5, opacity: 0, y: -100, display: 'absolute' },
-    { duration: 0.3 }
-  ).finished.then(() => done())
-}
-
-const handleChipsLeave = (element: Element, done: () => void) => {
-  const el = element as HTMLElement
-  animate(el, { opacity: 0 }).finished.then(() => done())
-}
 </script>
 
 <template>
   <div class="h-[54px]">
-    <transition appear @enter="handleEnter" @leave="handleFileLeave">
+    <ec-chat-toolbar-file-transition>
       <div v-if="status === 'file'">
         <n-upload
           accept="application/json"
@@ -67,12 +45,12 @@ const handleChipsLeave = (element: Element, done: () => void) => {
           </n-upload-dragger>
         </n-upload>
       </div>
-    </transition>
+    </ec-chat-toolbar-file-transition>
 
-    <transition appear @enter="handleEnter" @leave="handleChipsLeave">
+    <ec-chat-toolbar-chips-transition>
       <div v-if="status === 'chips'">
         <slot />
       </div>
-    </transition>
+    </ec-chat-toolbar-chips-transition>
   </div>
 </template>

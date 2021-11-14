@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { PropType } from '@vue/runtime-core'
-import { animate } from 'motion'
 import chatAvatar from '~/assets/chat-avatar.png'
 import { MessageType, useChatHello } from '~/lib/chat'
 
-const props = defineProps({
+defineProps({
   avatar: {
     required: false,
     type: Boolean,
@@ -30,20 +29,10 @@ const props = defineProps({
 })
 
 const helloText = useChatHello()
-
-const handleEnter = (element: Element) => {
-  const el = element as HTMLElement
-  const x = props.from ? -100 : 100
-
-  animate(el, {
-    opacity: [0, 1],
-    x: [x, 0],
-  })
-}
 </script>
 
 <template>
-  <transition appear @enter="handleEnter">
+  <ec-chat-message-transition :from="from">
     <div v-if="from" class="ec-chat-message ec-chat-message--from">
       <div v-if="avatar" class="select-none absolute -top-1.5 -left-5">
         <img :src="chatAvatar" alt="Аватар бота" width="16" height="16" />
@@ -81,7 +70,7 @@ const handleEnter = (element: Element) => {
         </div>
       </div>
     </div>
-  </transition>
+  </ec-chat-message-transition>
 </template>
 
 <style>

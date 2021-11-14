@@ -41,9 +41,11 @@ const nodeModel = useVModel(props, 'node', emits)
         </n-button>
       </n-input-group>
     </div>
-    <n-alert v-if="nodeModel.value === null" class="mt-2" type="info">
-      Ответьте на вопрос выше нажав на кнопку "Да" или "Нет"
-    </n-alert>
+    <n-collapse-transition appear :show="nodeModel.value === null">
+      <n-alert class="mt-2" type="info">
+        Ответьте на вопрос выше нажав на кнопку "Да" или "Нет"
+      </n-alert>
+    </n-collapse-transition>
     <ec-survey-options v-model:node="nodeModel" />
   </div>
 </template>

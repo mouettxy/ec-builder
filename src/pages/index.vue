@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import CollapseTransition from '@ivanv/vue-collapse-transition/src/CollapseTransition.vue'
 import { Ref } from '@vue/reactivity'
 import { UploadFileInfo, useMessage } from 'naive-ui'
 import { FileState, uploadSchema } from '~/lib/file'
@@ -111,23 +110,28 @@ const handleFileChange = async ({
             </div>
           </template>
 
-          <collapse-transition>
-            <div v-if="node.id && current === node.id">
-              <n-alert v-if="node.value === null" type="info">
-                Ответьте на вопрос выше нажав на кнопку "Да" или "Нет"
-              </n-alert>
+          <n-collapse-transition
+            appear
+            :show="!!node.id && current === node.id"
+          >
+            <div>
+              <n-collapse-transition :show="node.value === null">
+                <n-alert type="info">
+                  Ответьте на вопрос выше нажав на кнопку "Да" или "Нет"
+                </n-alert>
+              </n-collapse-transition>
               <ec-survey-options
                 v-model:node="enrichedSchema.nodes[nodeIndex]"
+                class="mb-4"
               />
               <ec-survey-controls
                 v-model:current="current"
                 :disabled-next="!isNodeCompleted(node)"
-                class="mt-4"
                 :total="totalQuestions"
                 @click:finish="handleFinish"
               />
             </div>
-          </collapse-transition>
+          </n-collapse-transition>
         </ec-survey-step>
       </n-steps>
     </div>
