@@ -46,14 +46,10 @@ const handleFileChange = async ({
 
 <template>
   <div class="w-[980px] mx-auto px-6 py-8">
-    <n-h2 v-if="enrichedSchema.name" prefix="bar">
-      <n-text type="primary">
-        {{ enrichedSchema.name }}
-      </n-text>
-    </n-h2>
-    <n-h2 v-else prefix="bar">
-      <n-text type="primary"> Загрузите схему </n-text>
-    </n-h2>
+    <ec-heading class="mb-4">
+      <template v-if="enrichedSchema.name">{{ enrichedSchema.name }}</template>
+      <template v-else>Загрузите схему</template>
+    </ec-heading>
     <div v-if="!enrichedSchema.nodes.length">
       <ec-file-upload
         v-if="fileState === 'nofile'"

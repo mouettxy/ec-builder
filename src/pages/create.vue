@@ -25,9 +25,7 @@ const handleFileChange = ({ file }: { file: UploadFileInfo }): Promise<any> =>
 <template>
   <div class="w-[980px] mx-auto px-6 py-8">
     <div class="flex justify-between items-center">
-      <n-h2 prefix="bar" class="mb-0">
-        <n-text type="primary"> Создание схемы </n-text>
-      </n-h2>
+      <ec-heading> Создание схемы </ec-heading>
       <n-button dashed @click="handleReset">
         Сбросить
         <bx-bx-refresh class="ml-2" />
@@ -51,7 +49,7 @@ const handleFileChange = ({ file }: { file: UploadFileInfo }): Promise<any> =>
         />
       </div>
       <div class="flex space-x-4">
-        <n-button dashed type="info" @click="handleAddTopLevelNode">
+        <n-button type="primary" @click="handleAddTopLevelNode">
           Добавить вопрос
         </n-button>
         <ec-file-upload
