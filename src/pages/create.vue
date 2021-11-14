@@ -23,7 +23,7 @@ const handleFileChange = ({ file }: { file: UploadFileInfo }): Promise<any> =>
 </script>
 
 <template>
-  <div class="w-[980px] px-6 py-8">
+  <div class="w-[980px] mx-auto px-6 py-8">
     <div class="flex justify-between items-center">
       <n-h2 prefix="bar" class="mb-0">
         <n-text type="primary"> Создание схемы </n-text>

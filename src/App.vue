@@ -18,11 +18,9 @@ const themeOverrides: GlobalThemeOverrides = {
 <template>
   <n-config-provider :theme-overrides="themeOverrides">
     <main class="w-full h-full">
-      <section class="flex justify-center">
-        <n-message-provider>
-          <router-view />
-        </n-message-provider>
-      </section>
+      <n-message-provider>
+        <router-view />
+      </n-message-provider>
     </main>
   </n-config-provider>
 </template>

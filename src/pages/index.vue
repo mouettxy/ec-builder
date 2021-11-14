@@ -46,7 +46,7 @@ const handleFileChange = async ({
 </script>
 
 <template>
-  <div class="w-[980px] px-6 py-8">
+  <div class="w-[980px] mx-auto px-6 py-8">
     <n-h2 v-if="enrichedSchema.name" prefix="bar">
       <n-text type="primary">
         {{ enrichedSchema.name }}

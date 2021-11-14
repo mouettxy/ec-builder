@@ -294,7 +294,17 @@ const handleChipClick = (chip: any, event: Event) => {
 </script>
 
 <template>
-  <div class="flex flex-col shadow-lg h-screen w-full lg:w-[980px]">
+  <div
+    class="
+      overflow-y-hidden
+      flex flex-col
+      shadow-lg
+      mx-auto
+      h-screen
+      w-full
+      lg:w-[980px]
+    "
+  >
     <div
       class="
         flex-shrink-0 flex
