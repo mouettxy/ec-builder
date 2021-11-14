@@ -54,14 +54,11 @@ const handleFileChange = ({ file }: { file: UploadFileInfo }): Promise<any> =>
         <n-button dashed type="info" @click="handleAddTopLevelNode">
           Добавить вопрос
         </n-button>
-        <n-upload
+        <ec-file-upload
           v-if="!schema.nodes.length"
-          accept="application/json"
-          :show-file-list="false"
-          :on-change="handleFileChange"
-        >
-          <n-button dashed type="default">Загрузить схему</n-button>
-        </n-upload>
+          button
+          @file-change="handleFileChange"
+        />
       </div>
       <n-button
         v-if="schema.nodes.length"

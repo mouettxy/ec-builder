@@ -55,23 +55,11 @@ const handleFileChange = async ({
       <n-text type="primary"> Загрузите схему </n-text>
     </n-h2>
     <div v-if="!enrichedSchema.nodes.length">
-      <n-upload
+      <ec-file-upload
         v-if="fileState === 'nofile'"
-        accept="application/json"
-        :show-file-list="false"
-        :on-change="handleFileChange"
-      >
-        <n-upload-dragger>
-          <div class="mb-2">
-            <n-icon size="48" :depth="3">
-              <bx-bx-archive class="w-48 h-48" />
-            </n-icon>
-          </div>
-          <n-text depth="2">
-            Нажмите для загрузки или перетащите файл схемы в эту область.
-          </n-text>
-        </n-upload-dragger>
-      </n-upload>
+        big
+        @file-change="handleFileChange"
+      />
     </div>
     <div v-else class="flex">
       <n-steps vertical :current="current" :status="currentStatus">
@@ -137,12 +125,6 @@ const handleFileChange = async ({
     </div>
   </div>
 </template>
-
-<style>
-.n-upload-trigger {
-  @apply w-full;
-}
-</style>
 
 <route lang="yaml">
 name: index

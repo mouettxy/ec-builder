@@ -29,28 +29,14 @@ const handleFileChange = async ({
 <template>
   <div class="h-[54px]">
     <ec-chat-toolbar-file-transition>
-      <div v-if="status === 'file'">
-        <n-upload
-          accept="application/json"
-          :show-file-list="false"
-          :on-change="handleFileChange"
-        >
-          <n-upload-dragger
-            class="flex justify-center space-x-4 h-54px items-center"
-          >
-            <bx-bx-archive class="block w-8 h-8 text-primary" />
-            <span class="font-medium text-primary">
-              Нажмите для загрузки или перетащите файл схемы в эту область.
-            </span>
-          </n-upload-dragger>
-        </n-upload>
-      </div>
+      <ec-file-upload
+        v-if="status === 'file'"
+        small
+        @file-change="handleFileChange"
+      />
     </ec-chat-toolbar-file-transition>
-
     <ec-chat-toolbar-chips-transition>
-      <div v-if="status === 'chips'">
-        <slot />
-      </div>
+      <slot v-if="status === 'chips'" />
     </ec-chat-toolbar-chips-transition>
   </div>
 </template>

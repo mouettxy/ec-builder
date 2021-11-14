@@ -28,6 +28,7 @@ declare module 'vue' {
     EcChatToolbarChipsTransition: typeof import('./src/components/transitions/ec-chat-toolbar-chips-transition.vue')['default']
     EcChatToolbarFileTransition: typeof import('./src/components/transitions/ec-chat-toolbar-file-transition.vue')['default']
     EcChatToolsTransition: typeof import('./src/components/transitions/ec-chat-tools-transition.vue')['default']
+    EcFileUpload: typeof import('./src/components/utility/ec-file-upload.vue')['default']
     EcNode: typeof import('./src/components/node/ec-node.vue')['default']
     EcNodeAddOption: typeof import('./src/components/node/ec-node-add-option.vue')['default']
     EcNodeOption: typeof import('./src/components/node/ec-node-option.vue')['default']
