@@ -13,17 +13,15 @@ defineProps({
     <div class="flex space-x-4 items-center">
       <div
         class="
-          w-[34px]
-          h-[32px]
-          items-center
-          flex
-          justify-center
           font-medium
+          text-lg text-gray-600
           rounded-full
           border-gray-200 border-1
         "
       >
-        <span>{{ step }}</span>
+        <div class="block w-8 h-8 flex items-center justify-center">
+          {{ step }}
+        </div>
       </div>
       <slot name="title"> Заголовок </slot>
     </div>
