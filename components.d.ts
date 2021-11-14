@@ -39,6 +39,7 @@ declare module 'vue' {
     EcSurveyOptions: typeof import('./src/components/survey/ec-survey-options.vue')['default']
     EcSurveyStep: typeof import('./src/components/survey/ec-survey-step.vue')['default']
     EcSurveySubnode: typeof import('./src/components/survey/ec-survey-subnode.vue')['default']
+    EcYesNoGroup: typeof import('./src/components/utility/ec-yes-no-group.vue')['default']
     Footer: typeof import('C:/Users/mouettxy/Desktop/projects/ec-builder/src/components/Footer.vue')['default']
     NAlert: typeof import('naive-ui')['NAlert']
     NAvatar: typeof import('naive-ui')['NAvatar']

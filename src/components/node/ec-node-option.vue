@@ -23,21 +23,7 @@ const optionModel = useVModel(props, 'option', emits)
   <template v-if="option.type === 'option'">
     <div class="flex">
       <div class="w-full">
-        <n-input-group>
-          <n-button
-            dashed
-            :type="optionModel.when ? 'info' : 'default'"
-            @click="optionModel.when = true"
-          >
-            Да
-          </n-button>
-          <n-button
-            dashed
-            :type="!optionModel.when ? 'info' : 'default'"
-            @click="optionModel.when = false"
-          >
-            Нет
-          </n-button>
+        <ec-yes-no-group v-model:value="optionModel.when">
           <n-input
             v-model:value="optionModel.title"
             type="text"
@@ -48,7 +34,7 @@ const optionModel = useVModel(props, 'option', emits)
               <n-icon><bx-bx-trash /></n-icon>
             </template>
           </n-button>
-        </n-input-group>
+        </ec-yes-no-group>
       </div>
     </div>
   </template>

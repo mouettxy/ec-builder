@@ -60,23 +60,7 @@ const handleNodeDelete = (node: ECNode, parent: ECNode | null) => {
       {{ nodeId }}
     </div>
     <div class="w-full" :class="{ 'col-span-2': !isFirst }">
-      <n-input-group>
-        <template v-if="!isFirst">
-          <n-button
-            dashed
-            :type="nodeModel.when ? 'info' : 'default'"
-            @click="nodeModel.when = true"
-          >
-            Да
-          </n-button>
-          <n-button
-            dashed
-            :type="!nodeModel.when ? 'info' : 'default'"
-            @click="nodeModel.when = false"
-          >
-            Нет
-          </n-button>
-        </template>
+      <ec-yes-no-group v-model:value="nodeModel.when" :show="!isFirst">
         <n-input
           v-model:value="nodeModel.title"
           type="text"
@@ -88,7 +72,7 @@ const handleNodeDelete = (node: ECNode, parent: ECNode | null) => {
           </template>
         </n-button>
         <ec-node-add-option v-model:node="nodeModel" :when="true" />
-      </n-input-group>
+      </ec-yes-no-group>
     </div>
 
     <div class="flex justify-center">

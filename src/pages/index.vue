@@ -72,24 +72,12 @@ const handleFileChange = async ({
                 </n-text>
               </h3>
               <template v-if="node.id && current === node.id">
-                <n-input-group>
-                  <n-button
-                    size="small"
-                    ghost
-                    :type="node.value === true ? 'primary' : 'default'"
-                    @click=";(node.value = true), (node.answer = '')"
-                  >
-                    Да
-                  </n-button>
-                  <n-button
-                    size="small"
-                    ghost
-                    :type="node.value === false ? 'primary' : 'default'"
-                    @click=";(node.value = false), (node.answer = '')"
-                  >
-                    Нет
-                  </n-button>
-                </n-input-group>
+                <ec-yes-no-group
+                  v-model:value="node.value"
+                  size="small"
+                  @click:yes="node.answer = ''"
+                  @click:no="node.answer = ''"
+                />
               </template>
             </div>
           </template>

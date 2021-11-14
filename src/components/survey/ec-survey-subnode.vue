@@ -12,6 +12,11 @@ const props = defineProps({
 const emits = defineEmits(['update:node'])
 
 const nodeModel = useVModel(props, 'node', emits)
+
+const nodeModelValue = computed(() => nodeModel.value.value)
+watch([nodeModelValue], () => {
+  nodeModel.value.answer = ''
+})
 </script>
 
 <template>
@@ -22,24 +27,7 @@ const nodeModel = useVModel(props, 'node', emits)
           {{ nodeModel.title }}
         </n-text>
       </h3>
-      <n-input-group>
-        <n-button
-          size="small"
-          ghost
-          :type="nodeModel.value === true ? 'primary' : 'default'"
-          @click=";(nodeModel.value = true), (nodeModel.answer = '')"
-        >
-          Да
-        </n-button>
-        <n-button
-          size="small"
-          ghost
-          :type="nodeModel.value === false ? 'primary' : 'default'"
-          @click=";(nodeModel.value = false), (nodeModel.answer = '')"
-        >
-          Нет
-        </n-button>
-      </n-input-group>
+      <ec-yes-no-group v-model:value="nodeModel.value" size="small" />
     </div>
     <n-collapse-transition appear :show="nodeModel.value === null">
       <n-alert class="mt-2" type="info">
