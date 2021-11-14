@@ -38,7 +38,7 @@ const handleNoClick = (event: Event) => {
       v-if="show"
       :size="size"
       ghost
-      :type="valueModel ? 'primary' : 'default'"
+      :type="valueModel === true ? 'primary' : 'default'"
       @click="handleYesClick"
     >
       Да
@@ -47,7 +47,7 @@ const handleNoClick = (event: Event) => {
       v-if="show"
       :size="size"
       ghost
-      :type="!valueModel ? 'primary' : 'default'"
+      :type="valueModel === false ? 'primary' : 'default'"
       @click="handleNoClick"
     >
       Нет
