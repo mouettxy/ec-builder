@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { animate, spring } from 'motion'
+import { animate } from 'motion'
 import { UploadFileInfo } from 'naive-ui'
 import { uploadSchema } from '~/lib/file'
 
@@ -28,11 +28,9 @@ const handleFileChange = async ({
 
 const handleEnter = (element: Element, done: () => void) => {
   const el = element as HTMLElement
-  animate(
-    el,
-    { scale: [0.7, 1] },
-    { easing: spring({ damping: 30 }) }
-  ).finished.then(() => done())
+  animate(el, { scale: [0.7, 1] }, { duration: 0.3 }).finished.then(() =>
+    done()
+  )
 }
 
 const handleFileLeave = (element: Element, done: () => void) => {
@@ -40,7 +38,7 @@ const handleFileLeave = (element: Element, done: () => void) => {
   animate(
     el,
     { scale: 0.5, opacity: 0, y: -100, display: 'absolute' },
-    { easing: spring({ damping: 30 }) }
+    { duration: 0.3 }
   ).finished.then(() => done())
 }
 
@@ -51,30 +49,30 @@ const handleChipsLeave = (element: Element, done: () => void) => {
 </script>
 
 <template>
-  <transition appear @enter="handleEnter" @leave="handleFileLeave">
-    <div v-if="status === 'file'">
-      <n-upload
-        accept="application/json"
-        :show-file-list="false"
-        :on-change="handleFileChange"
-      >
-        <n-upload-dragger>
-          <div class="mb-2">
-            <n-icon size="48" :depth="3">
-              <bx-bx-archive class="w-48 h-48" />
-            </n-icon>
-          </div>
-          <n-text depth="2">
-            Нажмите для загрузки или перетащите файл схемы в эту область.
-          </n-text>
-        </n-upload-dragger>
-      </n-upload>
-    </div>
-  </transition>
+  <div class="h-[54px]">
+    <transition appear @enter="handleEnter" @leave="handleFileLeave">
+      <div v-if="status === 'file'">
+        <n-upload
+          accept="application/json"
+          :show-file-list="false"
+          :on-change="handleFileChange"
+        >
+          <n-upload-dragger
+            class="flex justify-center space-x-4 h-54px items-center"
+          >
+            <bx-bx-archive class="block w-8 h-8 text-primary" />
+            <span class="font-medium text-primary">
+              Нажмите для загрузки или перетащите файл схемы в эту область.
+            </span>
+          </n-upload-dragger>
+        </n-upload>
+      </div>
+    </transition>
 
-  <transition appear @enter="handleEnter" @leave="handleChipsLeave">
-    <div v-if="status === 'chips'">
-      <slot />
-    </div>
-  </transition>
+    <transition appear @enter="handleEnter" @leave="handleChipsLeave">
+      <div v-if="status === 'chips'">
+        <slot />
+      </div>
+    </transition>
+  </div>
 </template>

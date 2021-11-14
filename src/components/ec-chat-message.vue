@@ -86,7 +86,7 @@ const handleEnter = (element: Element) => {
 
 <style>
 .ec-chat-message {
-  @apply relative inline-block max-w-4/5 shadow-md;
+  @apply relative inline-block max-w-4/5 shadow-md mt-auto;
 }
 
 .ec-chat-message--to {
