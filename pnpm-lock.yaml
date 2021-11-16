@@ -3,6 +3,8 @@ lockfileVersion: 5.3
 specifiers:
   '@antfu/eslint-config': 0.10.0
   '@iconify-json/bx': ^1.0.1
+  '@jsplumb/browser-ui': ^5.0.8
+  '@jsplumb/connector-flowchart': ^5.0.8
   '@types/file-saver': 2.0.3
   '@types/lodash': 4.14.176
   '@types/lodash.clonedeep': 4.5.6
@@ -33,6 +35,8 @@ specifiers:
   vue-router: 4.0.11
 
 dependencies:
+  '@jsplumb/browser-ui': 5.0.8
+  '@jsplumb/connector-flowchart': 5.0.8
   '@vueuse/core': 6.8.0_vue@3.2.19
   file-saver: 2.0.5
   lodash.clonedeep: 4.5.0
@@ -503,6 +507,34 @@ packages:
       '@types/yargs': 15.0.14
       chalk: 4.1.2
     dev: true
+
+  /@jsplumb/browser-ui/5.0.8:
+    resolution: {integrity: sha512-j8YH/lTJWnuPFVc4DIJtMvjY19PfULRMC7nP0NRC10pYs4B20SS4wKBkdB/i5Q8D0oRaBbG6B7R8aEHSdNbKYQ==}
+    dependencies:
+      '@jsplumb/core': 5.0.8
+    dev: false
+
+  /@jsplumb/common/5.0.8:
+    resolution: {integrity: sha512-aXt+7cRgOZnfYbUAreXhM9noS8wkLgVpmRB3jvA+zNnxVvILr8T225n/sxO+qUqIq+2Q+Nq8McyQnRHEqFwY6Q==}
+    dependencies:
+      '@jsplumb/util': 5.0.8
+    dev: false
+
+  /@jsplumb/connector-flowchart/5.0.8:
+    resolution: {integrity: sha512-0mcInp+zDAiM4yGPDelUruZT9o61MR+0YzSly5WIV5XXPOdQGN1k/joqimapf4goGsOmToRz5DrnaHstBlhRrQ==}
+    dependencies:
+      '@jsplumb/core': 5.0.8
+    dev: false
+
+  /@jsplumb/core/5.0.8:
+    resolution: {integrity: sha512-KqgWTgAHJbtVj6CbcWOjDpJdGyORJjIto7Ot0IEZsTdudjOjup3SCO9Uqklj/PrOfcEkgfvwaBty8hFMbYanPg==}
+    dependencies:
+      '@jsplumb/common': 5.0.8
+    dev: false
+
+  /@jsplumb/util/5.0.8:
+    resolution: {integrity: sha512-yoLiMo3Zs3NPUOhcq7bDQmIOqvMhxyjbI/eUmrqrya76XOqNhu0lrs7LCygBJh6K4J1btl9BuobECN3SQStv4g==}
+    dev: false
 
   /@nodelib/fs.scandir/2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}

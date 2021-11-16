@@ -21,6 +21,8 @@ declare module 'vue' {
     CarbonMoon: typeof import('~icons/carbon/moon')['default']
     CarbonPedestrian: typeof import('~icons/carbon/pedestrian')['default']
     CarbonSun: typeof import('~icons/carbon/sun')['default']
+    EcChartBlock: typeof import('./src/components/chart/ec-chart-block.vue')['default']
+    EcChartQuestion: typeof import('./src/components/chart/ec-chart-question.vue')['default']
     EcChat: typeof import('./src/components/chat/ec-chat.vue')['default']
     EcChatMessage: typeof import('./src/components/chat/ec-chat-message.vue')['default']
     EcChatMessageTransition: typeof import('./src/components/transitions/ec-chat-message-transition.vue')['default']

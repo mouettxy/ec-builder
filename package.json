@@ -8,6 +8,8 @@
     "lint": "eslint --fix src/**/*"
   },
   "dependencies": {
+    "@jsplumb/browser-ui": "^5.0.8",
+    "@jsplumb/connector-flowchart": "^5.0.8",
     "@vueuse/core": "6.8.0",
     "file-saver": "2.0.5",
     "lodash.clonedeep": "4.5.0",
@@ -44,6 +46,9 @@
   "vite": {
     "optimizeDeps": {
       "include": [
+        "@jsplumb/browser-ui",
+        "@jsplumb/connector-flowchart",
+        "@jsplumb/core",
         "file-saver",
         "lodash.clonedeep",
         "motion",
