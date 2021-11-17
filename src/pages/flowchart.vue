@@ -75,7 +75,7 @@ const blocks: FlowchartBlock[] = [
     when: true,
     text: 'В закупке один лот',
     type: 'block',
-    position: [560, 180 - 350],
+    position: [560, -170],
   },
   {
     id: 'chart_2_1_2',
@@ -84,7 +84,7 @@ const blocks: FlowchartBlock[] = [
     when: true,
     text: 'В закупке несколько лотов',
     type: 'block',
-    position: [560, 180 - 140],
+    position: [560, 40],
   },
   {
     id: 'chart_2_1_3',
@@ -93,7 +93,7 @@ const blocks: FlowchartBlock[] = [
     when: false,
     text: 'Во внеплановой закупке один лот',
     type: 'block',
-    position: [560, 180 + 240],
+    position: [560, 420],
   },
   {
     id: 'chart_2_2',
@@ -110,7 +110,7 @@ const blocks: FlowchartBlock[] = [
     when: true,
     text: 'УЗ или ЕИ или РЗП',
     type: 'block',
-    position: [840, 180 - 140],
+    position: [840, 40],
   },
   {
     id: 'chart_2_2_2',
@@ -119,7 +119,7 @@ const blocks: FlowchartBlock[] = [
     when: false,
     text: 'Другой способ',
     type: 'block',
-    position: [840, 180 + 240],
+    position: [840, 420],
   },
   {
     id: 'chart_2_3',
@@ -128,7 +128,7 @@ const blocks: FlowchartBlock[] = [
     when: false,
     text: 'Входит в список не включаемых в ГКПЗ',
     type: 'block',
-    position: [840, 180 + 240 + 240],
+    position: [840, 660],
   },
   {
     id: 'chart_2_4',
@@ -137,7 +137,7 @@ const blocks: FlowchartBlock[] = [
     when: false,
     text: 'Биржевая закупка',
     type: 'block',
-    position: [840, 180 + 240 + 240 + 240],
+    position: [840, 900],
   },
   {
     id: 'chart_3',
@@ -154,7 +154,7 @@ const blocks: FlowchartBlock[] = [
     when: true,
     text: 'Ставка НДС будет одна?',
     type: 'question',
-    position: [980 + 140, 180],
+    position: [1120, 180],
   },
   {
     id: 'chart_3_1_1',
@@ -163,7 +163,7 @@ const blocks: FlowchartBlock[] = [
     when: true,
     text: 'Ставка НДС одна',
     type: 'block',
-    position: [980 + 140 + 140, 180 - 140],
+    position: [1260, 40],
   },
   {
     id: 'chart_3_1_2',
@@ -172,7 +172,7 @@ const blocks: FlowchartBlock[] = [
     when: false,
     text: 'Несколько ставок НДС',
     type: 'block',
-    position: [980 + 140 + 140, 180 + 240],
+    position: [1260, 420],
   },
   {
     id: 'chart_3_3',
@@ -181,7 +181,7 @@ const blocks: FlowchartBlock[] = [
     when: false,
     text: 'Сумма договора без НДС',
     type: 'block',
-    position: [980 + 140 + 140, 180 + 240 + 240],
+    position: [1260, 660],
   },
   {
     id: 'chart_4',
@@ -189,7 +189,7 @@ const blocks: FlowchartBlock[] = [
     anchors: ['Bottom', 'Top'],
     text: 'Сумма графика оплаты по договору равна сумме графика поставки?',
     type: 'question',
-    position: [980 + 140 + 140 + 140, 380],
+    position: [1400, 380],
   },
   {
     id: 'chart_4_1',
@@ -198,7 +198,7 @@ const blocks: FlowchartBlock[] = [
     text: 'Не денежные расчеты',
     when: true,
     type: 'block',
-    position: [980 + 140 + 140 + 140 + 140, 180],
+    position: [1540, 180],
   },
   {
     id: 'chart_4_2',
@@ -207,7 +207,7 @@ const blocks: FlowchartBlock[] = [
     text: 'Денежные расчеты',
     when: false,
     type: 'block',
-    position: [980 + 140 + 140 + 140 + 140, 180 + 240 + 240],
+    position: [1540, 660],
   },
   {
     id: 'chart_5',
@@ -215,7 +215,7 @@ const blocks: FlowchartBlock[] = [
     anchors: ['Bottom', 'Top'],
     text: 'Необходимо контроллировать равенство суммы УСД и БГ?',
     type: 'question',
-    position: [980 + 140 * 5, 380],
+    position: [1680, 380],
   },
   {
     id: 'chart_5_1',
@@ -224,7 +224,7 @@ const blocks: FlowchartBlock[] = [
     text: 'Контроль по сумме отсутствует',
     when: true,
     type: 'block',
-    position: [980 + 140 * 6, 180],
+    position: [1820, 180],
   },
   {
     id: 'chart_5_2',
@@ -233,7 +233,7 @@ const blocks: FlowchartBlock[] = [
     text: 'Контроль по сумме есть',
     when: false,
     type: 'block',
-    position: [980 + 140 * 6, 180 + 240 + 240],
+    position: [1820, 660],
   },
   {
     id: 'chart_6',
@@ -241,7 +241,7 @@ const blocks: FlowchartBlock[] = [
     anchors: ['Bottom', 'Top'],
     text: 'Договор будет заключен от имени ИАП в интересах двух и более БУ',
     type: 'question',
-    position: [980 + 140 * 7, 380],
+    position: [1960, 380],
   },
   {
     id: 'chart_6_1',
@@ -250,7 +250,7 @@ const blocks: FlowchartBlock[] = [
     text: 'Централизованный',
     when: true,
     type: 'block',
-    position: [980 + 140 * 8, 180],
+    position: [2100, 180],
   },
   {
     id: 'chart_6_2',
@@ -259,7 +259,7 @@ const blocks: FlowchartBlock[] = [
     text: 'Не централизованный',
     when: false,
     type: 'block',
-    position: [980 + 140 * 8, 180 + 240 + 240],
+    position: [2100, 660],
   },
 ]
 
