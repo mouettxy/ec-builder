@@ -26,7 +26,7 @@ defineProps({
 <template>
   <div
     :style="`left:${left}px;top:${top}px;width:${width}px;height:${height}px;`"
-    class="ec-chart-question"
+    class="ec-ftemplate-decision"
     data-jtk-target="true"
     data-jtk-target-port-type="target"
   >
@@ -47,26 +47,19 @@ defineProps({
         </foreignObject>
       </svg>
     </div>
-    <!-- <div class="node-edit node-action" />
-    <div class="node-delete node-action delete" />
-    <div
-      class="drag-start connect"
-      data-jtk-source="true"
-      data-jtk-port-type="source"
-    ></div> -->
   </div>
 </template>
 
 <style>
-.ec-chart-question {
+.ec-ftemplate-decision {
   @apply z-10 border-none overflow-visible bg-transparent absolute;
 }
 
-.ec-chart-question svg {
+.ec-ftemplate-decision svg {
   @apply absolute stroke-black stroke-1 fill-white left-0 top-0;
 }
 
-.ec-chart-question text {
+.ec-ftemplate-decision text {
   @apply stroke-none fill-black font-sans text-sm font-normal;
 }
 </style>

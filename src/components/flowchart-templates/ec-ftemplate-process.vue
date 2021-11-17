@@ -25,7 +25,7 @@ defineProps({
 
 <template>
   <div
-    class="ec-chart-block"
+    class="ec-ftemplate-process"
     :style="{
       top: `${top}px`,
       left: `${left}px`,
@@ -38,7 +38,7 @@ defineProps({
 </template>
 
 <style>
-.ec-chart-block {
+.ec-ftemplate-process {
   @apply border-black border-1 border-solid p-0.5 text-sm flex items-center justify-center text-center absolute;
 }
 </style>
