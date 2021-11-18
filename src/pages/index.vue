@@ -8,6 +8,7 @@ import {
   isNodeCompleted,
   useSchemaAnswers,
   useEnrichedSchema,
+  setSchema,
 } from '~/lib/schema'
 
 const { enrichedSchema } = useEnrichedSchema()
@@ -38,6 +39,10 @@ const handleFileChange = async ({
   file: UploadFileInfo
 }): Promise<void> => {
   const uploadedFile = await uploadSchema(file)
+
+  if (uploadedFile.parsedFile) {
+    setSchema(uploadedFile.parsedFile)
+  }
 
   notification.success(uploadedFile.message.value)
   fileState.value = uploadedFile.fileState.value

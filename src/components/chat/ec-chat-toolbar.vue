@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { UploadFileInfo } from 'naive-ui'
 import { uploadSchema } from '~/lib/file'
+import { setSchema } from '~/lib/schema'
 
 defineProps({
   status: {
@@ -18,6 +19,11 @@ const handleFileChange = async ({
   file: UploadFileInfo
 }): Promise<void> => {
   const uploadedFile = await uploadSchema(file)
+
+  if (uploadedFile.parsedFile) {
+    setSchema(uploadedFile.parsedFile)
+  }
+
   emits('file-change', {
     fileState: uploadedFile.fileState,
     message: uploadedFile.message,

@@ -7,6 +7,7 @@ import {
   ECNode,
   resetSchema,
   schemaToFile,
+  setSchema,
   useSchema,
 } from '~/lib/schema'
 
@@ -18,8 +19,17 @@ const handleAddTopLevelNode = () => addNode(schema.nodes)
 const handleReset = () => resetSchema()
 const handleSaveSchema = () => schemaToFile()
 
-const handleFileChange = ({ file }: { file: UploadFileInfo }): Promise<any> =>
-  uploadSchema(file)
+const handleFileChange = async ({
+  file,
+}: {
+  file: UploadFileInfo
+}): Promise<any> => {
+  const uploadedFile = await uploadSchema(file)
+
+  if (uploadedFile.parsedFile) {
+    setSchema(uploadedFile.parsedFile)
+  }
+}
 </script>
 
 <template>

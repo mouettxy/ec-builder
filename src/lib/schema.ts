@@ -18,12 +18,17 @@ export type ECNode = {
   answer?: string
 }
 
+export type Instruction = {
+  name: string
+  nodes: ECNode[]
+}
+
 export type ECNodeOption = ECNode & { when: boolean }
 
 export const schema = reactive({
   name: '',
-  nodes: [] as ECNode[],
-})
+  nodes: [],
+} as Instruction)
 
 export function useSchema() {
   return { schema }

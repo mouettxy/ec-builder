@@ -1,6 +1,6 @@
 import { Ref } from 'vue'
 import { UploadFileInfo } from 'naive-ui'
-import { ECNode, setSchema } from './schema'
+import { ECNode } from './schema'
 
 export type FileState = 'nofile' | 'uploaded' | 'loading'
 
@@ -39,8 +39,9 @@ export async function uploadSchema(file: UploadFileInfo) {
         message.value = 'Не удалось загрузить файл'
       } else {
         fileState.value = 'uploaded'
-        setSchema(parsedFile)
         message.value = 'Файл успешно загружен'
+
+        return { fileState, message, parsedFile }
       }
     } catch (error) {
       fileState.value = 'nofile'
