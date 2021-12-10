@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { UploadFileInfo, useMessage } from 'naive-ui'
 import {
-  FlowchartNode,
   initJsPlumb,
   parseInstruction,
+  resetJsPlumb,
   setupConnections,
   setupInstructionLinks,
   setupLayout,
 } from '~/lib/flowchart'
+import { FlowchartNode } from '~/lib/flowchart/types'
 
 import { Instruction } from '~/lib/schema'
 import { FileState, uploadSchema } from '~/lib/file'
@@ -26,15 +27,22 @@ const handleFileChange = async ({
   const uploadedFile = await uploadSchema(file)
 
   if (uploadedFile.parsedFile) {
+    schemaName.value = uploadedFile.parsedFile.name
     nodes.value = setupInstructionLinks(
       parseInstruction(uploadedFile.parsedFile as Instruction)
     )
 
+    const { width } = useWindowSize()
+
+    const layerBaseline = width.value / 2 - 140
+    const innerLayerBaselineLeft = layerBaseline - 280
+    const innerLayerBaselineRight = layerBaseline + 280
+
     setupLayout(nodes.value, {
       layerHeight: 180,
-      layerBaseline: 500,
-      innerLayerBaselineLeft: 240,
-      innerLayerBaselineRight: 760,
+      layerBaseline,
+      innerLayerBaselineLeft,
+      innerLayerBaselineRight,
       spacingX: 10,
     })
 
@@ -48,24 +56,37 @@ const handleFileChange = async ({
   notification.success(uploadedFile.message.value)
   fileState.value = uploadedFile.fileState.value
 }
+
+const handleReset = () => {
+  resetJsPlumb()
+
+  nodes.value = []
+  schemaName.value = ''
+  fileState.value = 'nofile'
+}
 </script>
 
 <template>
-  <div v-if="nodes.length" class="ec-flowchart">
-    <template v-for="node in nodes" :key="node.id">
-      <ec-flowchart-node :node="node" />
-    </template>
-  </div>
-  <div v-else class="w-[980px] mx-auto px-6 py-8">
-    <ec-heading class="mb-4">
-      <template v-if="schemaName">{{ schemaName }}</template>
-      <template v-else>Загрузите схему</template>
-    </ec-heading>
+  <div class="w-[980px] mx-auto px-6 py-8">
+    <div class="flex justify-between items-center">
+      <ec-heading v-if="schemaName" class="mb-4"> {{ schemaName }} </ec-heading>
+      <ec-heading v-else class="mb-4"> Загрузите схему </ec-heading>
+      <n-button v-if="nodes.length" dashed @click="handleReset">
+        Сбросить
+        <bx-bx-refresh class="ml-2" />
+      </n-button>
+    </div>
     <ec-file-upload
       v-if="fileState === 'nofile'"
       big
       @file-change="handleFileChange"
     />
+  </div>
+
+  <div v-if="nodes.length" class="ec-flowchart">
+    <template v-for="node in nodes" :key="node.id">
+      <ec-flowchart-node :node="node" />
+    </template>
   </div>
 </template>
 

@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import { PropType } from '@vue/runtime-core'
-import {
-  FlowchartNode,
-  X_OFFSET,
-  DECISION_DIMENSIONS,
-  PROCESS_DIMENSIONS,
-} from '~/lib/flowchart'
+import { DECISION_DIMENSIONS, PROCESS_DIMENSIONS } from '~/lib/flowchart/consts'
+import { FlowchartNode } from '~/lib/flowchart/types'
 
 defineProps({
   node: {
@@ -21,7 +17,7 @@ defineProps({
     <ec-ftemplate-decision
       :id="node.id"
       :top="node.position[0]"
-      :left="node.position[1] + X_OFFSET"
+      :left="node.position[1]"
       :width="DECISION_DIMENSIONS.WIDTH"
       :height="DECISION_DIMENSIONS.HEIGHT"
     >
@@ -37,7 +33,7 @@ defineProps({
         <ec-ftemplate-process
           :id="children.id"
           :top="children.position[0]"
-          :left="children.position[1] + X_OFFSET"
+          :left="children.position[1]"
           :width="PROCESS_DIMENSIONS.WIDTH"
           :height="PROCESS_DIMENSIONS.HEIGHT"
         >

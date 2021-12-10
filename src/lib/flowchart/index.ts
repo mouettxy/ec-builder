@@ -1,36 +1,12 @@
-import { Ref } from '@vue/reactivity'
 import { AnchorSpec, OverlaySpec } from '@jsplumb/common'
-import { BrowserJsPlumbInstance, newInstance } from '@jsplumb/browser-ui'
+import { newInstance } from '@jsplumb/browser-ui'
 import { FlowchartConnector } from '@jsplumb/connector-flowchart'
 import { ECNode, Instruction } from '~/lib/schema'
-
-export type FlowchartNodeType = 'process' | 'decision'
-
-export type FlowchartNodeParent = { id: string; when?: boolean }
-
-export type FlowchartNode = {
-  id: string
-  text: string
-  position: [number, number]
-  type: FlowchartNodeType
-  parent?: FlowchartNodeParent
-  anchors?: [AnchorSpec, AnchorSpec]
-  links?: string[]
-  when?: boolean
-  childrens?: FlowchartNode[]
-}
-
-export type JSPlumbRef = Ref<BrowserJsPlumbInstance | null>
-
-export const X_OFFSET = 200 as const
-export const DECISION_DIMENSIONS = {
-  WIDTH: 280,
-  HEIGHT: 140,
-} as const
-export const PROCESS_DIMENSIONS = {
-  WIDTH: 200,
-  HEIGHT: 80,
-} as const
+import {
+  FlowchartNode,
+  FlowchartNodeParent,
+  JSPlumbRef,
+} from '~/lib/flowchart/types'
 
 export const jsPlumb: JSPlumbRef = ref(null)
 
@@ -46,6 +22,7 @@ export const initJsPlumb = (container: HTMLElement | Element) => {
           cornerRadius: 2,
         },
       },
+      elementsDraggable: false,
       paintStyle: {
         strokeWidth: 1,
         stroke: 'black',
@@ -53,6 +30,10 @@ export const initJsPlumb = (container: HTMLElement | Element) => {
       },
     })
   }
+}
+
+export const resetJsPlumb = () => {
+  jsPlumb.value = null
 }
 
 export const getElementById = (id: string) => {
@@ -152,7 +133,9 @@ export const setupConnections = (nodes: FlowchartNode[]) => {
     })
   }
 
-  nodes.forEach((e) => setupNode(e))
+  jsPlumb.value?.batch(() => {
+    nodes.forEach((e) => setupNode(e))
+  })
 }
 
 export const setupLayout = (
@@ -195,6 +178,7 @@ export const setupLayout = (
         const childX = nodeOffset - spaceX - widthOffset
         children.position = [childY, childX]
       })
+
       return
     }
 
