@@ -1,6 +1,7 @@
 import { AnchorSpec, OverlaySpec } from '@jsplumb/common'
 import { newInstance } from '@jsplumb/browser-ui'
 import { FlowchartConnector } from '@jsplumb/connector-flowchart'
+import { toBlob } from 'html-to-image'
 import { ECNode, Instruction } from '~/lib/schema'
 import {
   FlowchartNode,
@@ -9,8 +10,9 @@ import {
 } from '~/lib/flowchart/types'
 
 export const jsPlumb: JSPlumbRef = ref(null)
+export const flowchartNodes = ref([] as FlowchartNode[])
 
-export const initJsPlumb = (container: HTMLElement | Element) => {
+export function initJsPlumb(container: HTMLElement | Element) {
   if (!jsPlumb.value) {
     jsPlumb.value = newInstance({
       container,
@@ -32,15 +34,54 @@ export const initJsPlumb = (container: HTMLElement | Element) => {
   }
 }
 
-export const resetJsPlumb = () => {
-  jsPlumb.value = null
+export function resetJsPlumb() {
+  jsPlumb.value?.deleteEveryConnection()
 }
 
-export const getElementById = (id: string) => {
+export function useFlowchartNodes() {
+  return flowchartNodes
+}
+
+export function useFlowchartNodesControls() {
+  const clearNodes = () => {
+    flowchartNodes.value = []
+  }
+
+  const setupNodes = (instruction: Instruction) => {
+    flowchartNodes.value = setupInstructionLinks(parseInstruction(instruction))
+  }
+
+  return { clearNodes, setupNodes }
+}
+
+export function blobToBase64(blob: Blob | null): Promise<string> {
+  return new Promise((resolve, reject) => {
+    if (blob) {
+      const reader = new FileReader()
+      reader.onloadend = () => resolve(reader.result as string)
+      reader.readAsDataURL(blob)
+    } else {
+      reject(new Error('No blob provided'))
+    }
+  })
+}
+
+export async function containerToBase64(className: string) {
+  const blob = await toBlob(document.querySelector(className) as HTMLElement)
+
+  try {
+    const base64 = await blobToBase64(blob)
+    return base64
+  } catch (error) {
+    return ''
+  }
+}
+
+export function getElementById(id: string) {
   return document.getElementById(id) as Element
 }
 
-const getConnectorLabelId = (id: string, type: 'yes' | 'no') => {
+export function getConnectorLabelId(id: string, type: 'yes' | 'no') {
   if (type === 'yes') {
     const arrowId = `arrow_yes_${id}`
     return {
@@ -56,7 +97,7 @@ const getConnectorLabelId = (id: string, type: 'yes' | 'no') => {
   }
 }
 
-export const connectNodes = (sourceId: string, node: FlowchartNode) => {
+export function connectNodes(sourceId: string, node: FlowchartNode) {
   const labelYes = getConnectorLabelId(sourceId, 'yes')
   const labelNo = getConnectorLabelId(sourceId, 'no')
   const linksCount = node.links?.length || 0
@@ -118,7 +159,7 @@ export const connectNodes = (sourceId: string, node: FlowchartNode) => {
   })
 }
 
-export const setupConnections = (nodes: FlowchartNode[]) => {
+export function setupConnections(nodes: FlowchartNode[]) {
   const setupNode = (node: FlowchartNode) => {
     if (node.links?.length) {
       node.links.forEach((link) => connectNodes(link, node))
@@ -138,7 +179,7 @@ export const setupConnections = (nodes: FlowchartNode[]) => {
   })
 }
 
-export const setupLayout = (
+export function setupLayout(
   nodes: FlowchartNode[],
   options: {
     layerHeight: number
@@ -147,7 +188,7 @@ export const setupLayout = (
     innerLayerBaselineRight: number
     spacingX: number
   }
-) => {
+) {
   let currentLayer = -1
 
   function setupChildrens(node: FlowchartNode) {
@@ -248,7 +289,7 @@ export const setupLayout = (
   nodes.forEach((node) => setupNode(node, false))
 }
 
-export const parseInstruction = (instruction: Instruction) => {
+export function parseInstruction(instruction: Instruction) {
   const getNodeType = (type: 'option' | 'node') => {
     const typeMapper = {
       option: 'process',
@@ -301,7 +342,7 @@ export const parseInstruction = (instruction: Instruction) => {
   })
 }
 
-export const setupInstructionLinks = (nodes: FlowchartNode[]) => {
+export function setupInstructionLinks(nodes: FlowchartNode[]) {
   const getFlattenNodes = (nodes: FlowchartNode[]) => {
     const flattenNodes: FlowchartNode[] = []
 

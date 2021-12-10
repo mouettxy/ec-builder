@@ -1,22 +1,15 @@
 <script setup lang="ts">
 import { UploadFileInfo, useMessage } from 'naive-ui'
-import {
-  initJsPlumb,
-  parseInstruction,
-  resetJsPlumb,
-  setupConnections,
-  setupInstructionLinks,
-  setupLayout,
-} from '~/lib/flowchart'
-import { FlowchartNode } from '~/lib/flowchart/types'
+import { useFlowchartNodes, useFlowchartNodesControls } from '~/lib/flowchart'
 
 import { Instruction } from '~/lib/schema'
 import { FileState, uploadSchema } from '~/lib/file'
 
-const nodes = ref([] as FlowchartNode[])
 const schemaName = ref('')
-
 const fileState = ref('nofile' as FileState)
+
+const nodes = useFlowchartNodes()
+const { clearNodes, setupNodes } = useFlowchartNodesControls()
 const notification = useMessage()
 
 const handleFileChange = async ({
@@ -28,29 +21,7 @@ const handleFileChange = async ({
 
   if (uploadedFile.parsedFile) {
     schemaName.value = uploadedFile.parsedFile.name
-    nodes.value = setupInstructionLinks(
-      parseInstruction(uploadedFile.parsedFile as Instruction)
-    )
-
-    const { width } = useWindowSize()
-
-    const layerBaseline = width.value / 2 - 140
-    const innerLayerBaselineLeft = layerBaseline - 280
-    const innerLayerBaselineRight = layerBaseline + 280
-
-    setupLayout(nodes.value, {
-      layerHeight: 180,
-      layerBaseline,
-      innerLayerBaselineLeft,
-      innerLayerBaselineRight,
-      spacingX: 10,
-    })
-
-    nextTick(() => {
-      initJsPlumb(document.querySelector('.ec-flowchart') as Element)
-
-      setupConnections(nodes.value)
-    })
+    setupNodes(uploadedFile.parsedFile as Instruction)
   }
 
   notification.success(uploadedFile.message.value)
@@ -58,9 +29,7 @@ const handleFileChange = async ({
 }
 
 const handleReset = () => {
-  resetJsPlumb()
-
-  nodes.value = []
+  clearNodes()
   schemaName.value = ''
   fileState.value = 'nofile'
 }
@@ -83,26 +52,8 @@ const handleReset = () => {
     />
   </div>
 
-  <div v-if="nodes.length" class="ec-flowchart">
-    <template v-for="node in nodes" :key="node.id">
-      <ec-flowchart-node :node="node" />
-    </template>
-  </div>
+  <ec-flowchart :nodes="nodes" />
 </template>
-
-<style>
-.ec-flowchart {
-  @apply flex flex-col items-center relative py-12;
-}
-
-.ec-flowchart .jtk-endpoint {
-  @apply !hidden;
-}
-
-.ec-flowchart .jtk-overlay.label {
-  @apply bg-white z-10 p-2;
-}
-</style>
 
 <route lang="yaml">
 name: flowchart

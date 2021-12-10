@@ -31,6 +31,7 @@ declare module 'vue' {
     EcChatToolbarFileTransition: typeof import('./src/components/transitions/ec-chat-toolbar-file-transition.vue')['default']
     EcChatToolsTransition: typeof import('./src/components/transitions/ec-chat-tools-transition.vue')['default']
     EcFileUpload: typeof import('./src/components/utility/ec-file-upload.vue')['default']
+    EcFlowchart: typeof import('./src/components/flowchart/ec-flowchart.vue')['default']
     EcFlowchartNode: typeof import('./src/components/flowchart/ec-flowchart-node.vue')['default']
     EcFtemplateDecision: typeof import('./src/components/flowchart-templates/ec-ftemplate-decision.vue')['default']
     EcFtemplateProcess: typeof import('./src/components/flowchart-templates/ec-ftemplate-process.vue')['default']
