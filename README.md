@@ -4,6 +4,14 @@
 
 Таким образом пользователи могут сами получить ответы на необходимые вопросы пройдя простое тестирование.
 
+## Доступные ссылки
+
+https://newfox79.github.io/ec-builder/#/create - создать схему
+https://newfox79.github.io/ec-builder/#/ - пройти анкету по схеме
+https://newfox79.github.io/ec-builder/#/chat - пройти анкету по схеме в интерфейсе чат-бота
+
+https://newfox79.github.io/ec-builder/#/flowchart - генерация блок схемы на основе загруженной схемы (WIP) (branch: feat/flowchart)
+
 ## Документация
 
 ### Используемые инструменты
@@ -19,7 +27,7 @@ UI фреймворк: naive-ui
 
 Описание назначения папок и файлов.
 
-![[ec-note-architecture.jpg]]
+![Блок схема архитектуры](https://github.com/newfox79/ec-builder/blob/master/ec-note-architecture.jpg)
 
 <div style="page-break-after: always;"></div>
 
